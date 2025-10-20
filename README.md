@@ -10,7 +10,6 @@ The User Data Storage Repository Contract is FAIR DAO's primary backend data sto
 ### 1. Manager Management
 - **Add/Remove Managers**: Owners can add or remove managers with configurable permissions
 - **Role-based Access Control**: Distinguishes between regular managers and owners with elevated privileges
-- **Multi-signature Approval**: Critical operations require multiple approvals for enhanced security
 
 ### 2. Configuration Key Management
 - **Key Manager Assignment**: Assign specific managers to control access to particular configuration keys
@@ -25,7 +24,6 @@ The User Data Storage Repository Contract is FAIR DAO's primary backend data sto
 ### 4. Security Mechanisms
 - **Emergency Stop**: Pause critical contract operations in case of security incidents
 - **Permission Validation**: Strict access control for all sensitive operations
-- **Minimum Approval Threshold**: Configurable minimum number of approvals required for critical changes
 
 ### 5. Query Functions
 - **Manager Information**: Retrieve lists of managers and their permissions
@@ -56,7 +54,6 @@ The User Data Storage Repository Contract is FAIR DAO's primary backend data sto
 - `enableEmergencyStop()`: Pause critical contract operations
 - `disableEmergencyStop()`: Resume contract operations
 - `isEmergencyStopped()`: Check if contract is in emergency stop mode
-- `setMinApproveNumber(uint64 newMinApproveNumber)`: Configure minimum approval threshold
 
 ## Contribution
 

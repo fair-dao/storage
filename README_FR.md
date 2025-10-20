@@ -10,7 +10,6 @@ Le contrat de dépôt de données utilisateur est le service de stockage de donn
 ### 1. Gestion des Administrateurs
 - **Ajouter/Supprimer des Administrateurs**: Les propriétaires peuvent ajouter ou supprimer des administrateurs avec des permissions configurables
 - **Contrôle d'Accès Basé sur les Rôles**: Distingue entre les administrateurs réguliers et les propriétaires dotés de privilèges élevés
-- **Approbation Multisignature**: Les opérations critiques nécessitent plusieurs approbations pour une sécurité accrue
 
 ### 2. Gestion des Clés de Configuration
 - **Attribution des Administrateurs de Clés**: Attribuer des administrateurs spécifiques pour contrôler l'accès à des clés de configuration particulières
@@ -25,7 +24,6 @@ Le contrat de dépôt de données utilisateur est le service de stockage de donn
 ### 4. Mécanismes de Sécurité
 - **Arrêt d'Urgence**: Arrêter les opérations critiques du contrat en cas d'incident de sécurité
 - **Vérification des Autorisations**: Contrôle d'accès strict pour toutes les opérations sensibles
-- **Nombre Minimum d'Approbations**: Nombre configurable de mises à jour minimales nécessaires pour des modifications importantes
 
 ### 5. Fonctions de Requête
 - **Informations sur les Administrateurs**: Récupérer la liste des administrateurs et leurs autorisations
@@ -56,7 +54,6 @@ Le contrat de dépôt de données utilisateur est le service de stockage de donn
 - `enableEmergencyStop()`: Arrêter les opérations critiques du contrat
 - `disableEmergencyStop()`: Reprendre les opérations du contrat
 - `isEmergencyStopped()`: Vérifier si le contrat est en mode d'arrêt d'urgence
-- `setMinApproveNumber(uint64 newMinApproveNumber)`: Configurer le nombre minimum d'approbations
 
 ## Contributions
 

@@ -10,7 +10,6 @@ El Contrato de Repositorio de Datos de Usuario es el servicio principal de almac
 ### 1. Gestión de administradores
 - **Agregar/Eliminar Administradores**: Los propietarios pueden agregar o eliminar administradores con permisos configurables
 - **Control de acceso basado en roles**: Distingue entre administradores regulares y propietarios con privilegios elevados
-- **Aprobación multi-firma**: Las operaciones críticas requieren múltiples aprobaciones para mayor seguridad
 
 ### 2. Gestión de claves de configuración
 - **Asignación de administradores de claves**: Asignar administradores específicos para controlar el acceso a claves de configuración particulares
@@ -25,7 +24,6 @@ El Contrato de Repositorio de Datos de Usuario es el servicio principal de almac
 ### 4. Mecanismos de seguridad
 - **Parada de emergencia**: Pausar operaciones críticas del contrato en caso de incidentes de seguridad
 - **Validación de permisos**: Control estricto de acceso para todas las operaciones sensibles
-- **Umbral mínimo de aprobación**: Número configurable de aprobaciones mínimas requeridas para cambios críticos
 
 ### 5. Funciones de consulta
 - **Información del administrador**: Recuperar listas de administradores y sus permisos
@@ -56,7 +54,6 @@ El Contrato de Repositorio de Datos de Usuario es el servicio principal de almac
 - `enableEmergencyStop()`: Pausar operaciones críticas del contrato
 - `disableEmergencyStop()`: Reanudar operaciones del contrato
 - `isEmergencyStopped()`: Comprobar si el contrato está en modo de parada de emergencia
-- `setMinApproveNumber(uint64 newMinApproveNumber)`: Configurar el umbral mínimo de aprobación
 
 ## Contribución
 

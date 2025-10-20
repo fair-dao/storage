@@ -16,11 +16,6 @@ contract FairdaoStorage {
         bool isOwner;
     }
 
-    struct ApprovedInfo {
-        address approver;
-        uint64 approveTime;
-    }
-
     event EmergencyStopped(address indexed creator);
     event EmergencyResumed(address indexed creator);
     
@@ -62,9 +57,7 @@ contract FairdaoStorage {
     mapping(address => ManagerInfo) public managers;
     address[] private managerArray;
     
-    mapping(bytes32 => ApprovedInfo[]) private operateApproved;
 
-    uint64 public minApproveNumber = 1;
 
     mapping(bytes32 => address) public keyManagers;
     bytes32[] private keyArray;
@@ -114,56 +107,7 @@ contract FairdaoStorage {
         emit ManagerAdded(_manager, _isOwner, msg.sender);
     }
 
-    /**
-     * @dev Check if operation is approved / 检查操作是否已获得批准
-     * @param operationCode Operation identifier / 操作标识符
-     * @return approved Whether the operation is approved / 操作是否已批准
-     */
-    function _checkApproved(bytes memory operationCode) private returns (bool) {
-        if(minApproveNumber == 0) return true;
-        bytes32 operationId = keccak256(operationCode);
-        ApprovedInfo[] storage approvals = operateApproved[operationId];
-        uint64 curTime = uint64(block.timestamp);
 
-        bool alreadyApproved = false;
-        for (uint256 i = 0; i < approvals.length; i++) {
-            if (approvals[i].approver == msg.sender) {
-                alreadyApproved = true;
-                if (curTime - approvals[i].approveTime > 60 * 60 * 24) {
-                    approvals[i].approveTime = curTime;
-                }
-                break;
-            }
-        }
-        
-        if (alreadyApproved) {
-            return false;
-        }
-        
-        for (uint256 i = approvals.length; i > 0; i--) {
-            uint256 index = i - 1;
-            if (curTime - approvals[index].approveTime > 60 * 60 * 24) {
-                if (index < approvals.length - 1) {
-                    approvals[index] = approvals[approvals.length - 1];
-                }
-                approvals.pop();
-            }
-        }
-        
-        ApprovedInfo memory info = ApprovedInfo({
-            approver: msg.sender,
-            approveTime: curTime
-        });
-        
-        approvals.push(info);
-        
-        if (approvals.length >= minApproveNumber) {
-            delete operateApproved[operationId];
-            return true;
-        }
-        
-        return false;
-    }    
 
     /**
      * @dev Check if address is manager / 检测是否为管理员
@@ -207,14 +151,8 @@ contract FairdaoStorage {
      */
     function addManager(address manager, bool withOwnerPermission) external isOwner notEmergency returns (bool) {
         require(!withOwnerPermission || managers[msg.sender].isOwner, "Only owner can add owner");
-        bytes memory operationCode = abi.encode(1, manager, withOwnerPermission);
-        
-        if (_checkApproved(operationCode)) {
-            _addManager(manager, withOwnerPermission);
-            return true;
-        } else {
-            return false;
-        }
+        _addManager(manager, withOwnerPermission);
+        return true;
     }
 
     /**
@@ -241,14 +179,7 @@ contract FairdaoStorage {
         
         if (managerInfo.isOwner) {
             uint256 currentOwnerCount = getOwnerCount();
-            require(currentOwnerCount > minApproveNumber + 1, "Cannot remove owner, owner count must be at least minApproveNumber + 2");
-            
-            if(currentOwnerCount < minApproveNumber + 5) {
-                bytes memory operationCode = abi.encode(2, manager);
-                if (!_checkApproved(operationCode)) {
-                    return false;
-                }
-            }
+            require(currentOwnerCount > 1, "Cannot remove last owner");
         }
 
         uint256 lastIndex = managerArray.length - 1;
@@ -419,28 +350,5 @@ contract FairdaoStorage {
         return keyArray[index];
     }
 
-    /**
-     * @dev Set minimum approve number / 设置批准授权最小数量
-     * Only owner can operate / 只有所有者可以操作
-     * @param newMinApproveNumber New minimum approve number / 新的最小批准数量
-     * @return success Operation result / 操作结果
-     */
-    function setMinApproveNumber(uint64 newMinApproveNumber) external isOwner notEmergency returns (bool) {
-        uint256 ownerCount = getOwnerCount();
-        
-        require(newMinApproveNumber > 0, "minApproveNumber must be greater than 0");
-        require(newMinApproveNumber + 2  < ownerCount, "minApproveNumber must be less than ownerCount - 2");
-        
-        if (newMinApproveNumber == minApproveNumber) {
-            return true;
-        }
-        
-        bytes memory operationCode = abi.encode(6, newMinApproveNumber);
-        if (_checkApproved(operationCode)) {
-            minApproveNumber = newMinApproveNumber;
-            return true;
-        } else {
-            return false;
-        }
-    }
+
 }
