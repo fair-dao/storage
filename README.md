@@ -11,10 +11,10 @@ The User Data Storage Repository Contract is FAIR DAO's primary backend data sto
 - **Add/Remove Managers**: Owners can add or remove managers with configurable permissions
 - **Role-based Access Control**: Distinguishes between regular managers and owners with elevated privileges
 
-### 2. Configuration Key Management
-- **Key Manager Assignment**: Assign specific managers to control access to particular configuration keys
-- **Batch Key Manager Setting**: Efficiently set managers for multiple configuration keys simultaneously
-- **Key Tracking**: Maintain an index of all registered configuration keys
+### 2. Key Management
+- **Key Manager Assignment**: Assign specific managers to control access to particular keys
+- **Batch Key Manager Setting**: Efficiently set managers for multiple keys simultaneously
+- **Key Tracking**: Maintain an index of all registered keys
 
 ### 3. Data Storage Functions
 - **User-specific Data Storage**: Store and retrieve data associated with specific user addresses
@@ -27,7 +27,7 @@ The User Data Storage Repository Contract is FAIR DAO's primary backend data sto
 
 ### 5. Query Functions
 - **Manager Information**: Retrieve lists of managers and their permissions
-- **Key Information**: Access registered configuration keys and their assigned managers
+- **Key Information**: Access registered keys and their assigned managers
 - **Contract Status**: Check if the contract is in emergency stop mode
 
 ## Contract Functions
@@ -40,9 +40,9 @@ The User Data Storage Repository Contract is FAIR DAO's primary backend data sto
 - `getManagerCount()`: Get the total number of managers
 
 ### Key Management
-- `setKeyManagers(bytes32[] keys, address oldManager, address manager)`: Set managers for multiple configuration keys
+- `setKeyManagers(bytes32[] keys, address oldManager, address manager)`: Set managers for multiple keys
 - `isKeyManager(bytes32 key, address user)`: Check if an address is a manager for a specific key
-- `getKeyAtIndex(uint256 index)`: Get a configuration key at a specific index
+- `getKeyAtIndex(uint256 index)`: Get a key at a specific index
 
 ### Data Operations
 - `setUserData(address targetUser, bytes32 key, bytes data)`: Store data for a specific user

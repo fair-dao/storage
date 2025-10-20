@@ -11,10 +11,10 @@ Le contrat de dépôt de données utilisateur est le service de stockage de donn
 - **Ajouter/Supprimer des Administrateurs**: Les propriétaires peuvent ajouter ou supprimer des administrateurs avec des permissions configurables
 - **Contrôle d'Accès Basé sur les Rôles**: Distingue entre les administrateurs réguliers et les propriétaires dotés de privilèges élevés
 
-### 2. Gestion des Clés de Configuration
-- **Attribution des Administrateurs de Clés**: Attribuer des administrateurs spécifiques pour contrôler l'accès à des clés de configuration particulières
-- **Configuration par Lot des Administrateurs de Clés**: Définir efficacement les administrateurs pour plusieurs clés de configuration simultanément
-- **Suivi des Clés**: Maintenir un index de toutes les clés de configuration enregistrées
+### 2. Gestion des Clés
+- **Attribution des Administrateurs de Clés**: Attribuer des administrateurs spécifiques pour contrôler l'accès à des clés particulières
+- **Configuration par Lot des Administrateurs de Clés**: Définir efficacement les administrateurs pour plusieurs clés simultanément
+- **Suivi des Clés**: Maintenir un index de toutes les clés enregistrées
 
 ### 3. Fonctions de Stockage de Données
 - **Stockage de Données Spécifiques à l'Utilisateur**: Stocker et récupérer des données associées à des adresses utilisateur spécifiques
@@ -27,7 +27,7 @@ Le contrat de dépôt de données utilisateur est le service de stockage de donn
 
 ### 5. Fonctions de Requête
 - **Informations sur les Administrateurs**: Récupérer la liste des administrateurs et leurs autorisations
-- **Informations sur les Clés**: Accéder aux clés de configuration enregistrées et leurs administrateurs attribués
+- **Informations sur les Clés**: Accéder aux clés enregistrées et leurs administrateurs attribués
 - **État du Contrat**: Vérifier si le contrat est en mode d'arrêt d'urgence
 
 ## Fonctions du Contrat
@@ -40,9 +40,9 @@ Le contrat de dépôt de données utilisateur est le service de stockage de donn
 - `getManagerCount()`: Obtenir le nombre total d'administrateurs
 
 ### Gestion des Clés
-- `setKeyManagers(bytes32[] keys, address oldManager, address manager)`: Définir des administrateurs pour plusieurs clés de configuration
+- `setKeyManagers(bytes32[] keys, address oldManager, address manager)`: Définir des administrateurs pour plusieurs clés
 - `isKeyManager(bytes32 key, address user)`: Vérifier si une adresse est un administrateur d'une clé spécifique
-- `getKeyAtIndex(uint256 index)`: Obtenir une clé de configuration à un index spécifique
+- `getKeyAtIndex(uint256 index)`: Obtenir une clé à un index spécifique
 
 ### Opérations sur les Données
 - `setUserData(address targetUser, bytes32 key, bytes data)`: Stocker des données pour un utilisateur spécifique

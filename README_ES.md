@@ -11,10 +11,10 @@ El Contrato de Repositorio de Datos de Usuario es el servicio principal de almac
 - **Agregar/Eliminar Administradores**: Los propietarios pueden agregar o eliminar administradores con permisos configurables
 - **Control de acceso basado en roles**: Distingue entre administradores regulares y propietarios con privilegios elevados
 
-### 2. Gestión de claves de configuración
-- **Asignación de administradores de claves**: Asignar administradores específicos para controlar el acceso a claves de configuración particulares
-- **Configuración por lotes de administradores de claves**: Establecer administradores para múltiples claves de configuración simultáneamente de manera eficiente
-- **Seguimiento de claves**: Mantener un índice de todas las claves de configuración registradas
+### 2. Gestión de claves
+- **Asignación de administradores de claves**: Asignar administradores específicos para controlar el acceso a claves particulares
+- **Configuración por lotes de administradores de claves**: Establecer administradores para múltiples claves simultáneamente de manera eficiente
+- **Seguimiento de claves**: Mantener un índice de todas las claves registradas
 
 ### 3. Funciones de almacenamiento de datos
 - **Almacenamiento de datos específicos del usuario**: Almacenar y recuperar datos asociados con direcciones de usuario específicas
@@ -27,7 +27,7 @@ El Contrato de Repositorio de Datos de Usuario es el servicio principal de almac
 
 ### 5. Funciones de consulta
 - **Información del administrador**: Recuperar listas de administradores y sus permisos
-- **Información de claves**: Acceder a claves de configuración registradas y sus administradores asignados
+- **Información de claves**: Acceder a claves registradas y sus administradores asignados
 - **Estado del contrato**: Comprobar si el contrato está en modo de parada de emergencia
 
 ## Funciones del contrato
@@ -40,9 +40,9 @@ El Contrato de Repositorio de Datos de Usuario es el servicio principal de almac
 - `getManagerCount()`: Obtener el número total de administradores
 
 ### Gestión de claves
-- `setKeyManagers(bytes32[] keys, address oldManager, address manager)`: Establecer administradores para múltiples claves de configuración
+- `setKeyManagers(bytes32[] keys, address oldManager, address manager)`: Establecer administradores para múltiples claves
 - `isKeyManager(bytes32 key, address user)`: Comprobar si una dirección es un administrador para una clave específica
-- `getKeyAtIndex(uint256 index)`: Obtener una clave de configuración en un índice específico
+- `getKeyAtIndex(uint256 index)`: Obtener una clave en un índice específico
 
 ### Operaciones de datos
 - `setUserData(address targetUser, bytes32 key, bytes data)`: Almacenar datos para un usuario específico

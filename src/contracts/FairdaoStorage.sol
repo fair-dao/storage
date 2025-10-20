@@ -226,7 +226,7 @@ contract FairdaoStorage {
     /**
      * @dev Store data for a user / 为用户存储数据
      * @param user User address / 用户地址
-     * @param key Key / 键
+     * @param key 键
      * @param data Data to store / 要存储的数据
      * @return success Operation result / 操作结果
      */
@@ -247,7 +247,7 @@ contract FairdaoStorage {
     /**
      * @dev Get stored data for user (only key manager) / 获取用户的存储数据（仅键管理者）
      * @param user User address / 用户地址
-     * @param key Configuration key / 配置键
+     * @param key  键
      * @return data Stored data / 存储的数据
      * @return timestamp Last update timestamp / 最后更新时间戳
      */
@@ -263,7 +263,7 @@ contract FairdaoStorage {
 
     /**
      * @dev Store shared data (only key manager) / 存储共享数据（仅键管理者）
-     * @param key Configuration key / 配置键
+     * @param key  键
      * @param sharedValueId Unique identifier for the value / 值的唯一标识符
      * @param data Data to store / 要存储的数据
      * @return success Operation result / 操作结果
@@ -286,7 +286,7 @@ contract FairdaoStorage {
 
     /**
      * @dev Get shared data / 获取共享数据
-     * @param key Configuration key / 配置键
+     * @param key  键
      * @param sharedValueId Unique identifier for the value / 值的唯一标识符
      * @return data Stored shared data / 存储的共享数据
      * @return timestamp Last update timestamp / 最后更新时间戳
