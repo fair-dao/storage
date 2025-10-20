@@ -1,0 +1,6 @@
+[1018/165316.983:ERROR:context.cc(149)] The cache_path directory (c:\program files\microsoft visual studio\18\insiders\common7\ide\extensions\knkqrvk0.k3f\CefSharp\Cache\d3b517cef0964555b01e24e727c179a5) could not be created.
+[1018/165317.003:ERROR:context.cc(164)] The cache_path is invalid. Defaulting to in-memory storage.
+[1018/165317.111:WARNING:resource_util.cc(94)] Please customize CefSettings.root_cache_path for your application. Use of the default value may lead to unintended process singleton behavior.
+[1020/173320.773:ERROR:context.cc(149)] The cache_path directory (c:\program files\microsoft visual studio\18\insiders\common7\ide\extensions\knkqrvk0.k3f\CefSharp\Cache\c6ae230616e74da0ac95d8e004b4361b) could not be created.
+[1020/173320.837:ERROR:context.cc(164)] The cache_path is invalid. Defaulting to in-memory storage.
+[1020/173320.931:WARNING:resource_util.cc(94)] Please customize CefSettings.root_cache_path for your application. Use of the default value may lead to unintended process singleton behavior.
