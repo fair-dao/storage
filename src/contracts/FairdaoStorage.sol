@@ -119,10 +119,10 @@ contract FairdaoStorage {
     }
 
     /**
-     * @dev Check if address is config key manager / 检测是否为配置键管理者
-     * @param key Configuration key / 配置键
+     * @dev Check if address is key manager / 检测是否为键管理者
+     * @param key Key / 键
      * @param user Address to check / 要检查的地址
-     * @return isKeyManager Whether the address is the key manager / 该地址是否为配置键管理者
+     * @return isKeyManager Whether the address is the key manager / 该地址是否为键管理者
      */
     function isKeyManager(bytes32 key, address user) external view returns (bool) {
         if (user == address(0)) return false;
@@ -196,14 +196,14 @@ contract FairdaoStorage {
     }
     
     /**
-     * @dev Set a manager for multiple configuration keys / 为多个配置键设置同一个管理者
-     * @param keys Array of configuration keys / 配置键数组
+     * @dev Set a manager for multiple  keys / 为多个键设置同一个管理者
+     * @param keys Array of  keys / 键数组
      * @param manager Manager address / 管理者地址
      * @return success Operation result / 操作结果
      */
     function setKeyManagers(bytes32[] memory keys, address oldManager, address manager) external onlyManager notEmergency returns (bool) {
         require(manager != address(0), "Manager cannot be zero");
-        require(keys.length > 0, "Config keys array cannot be empty");
+        require(keys.length > 0, "Keys array cannot be empty");
 
         for (uint256 i = 0; i < keys.length; i++) {
             bytes32 key = keys[i];
@@ -225,44 +225,44 @@ contract FairdaoStorage {
     
     /**
      * @dev Store data for a user / 为用户存储数据
-     * @param targetUser User address / 用户地址
-     * @param key Configuration key / 配置键
+     * @param user User address / 用户地址
+     * @param key Key / 键
      * @param data Data to store / 要存储的数据
      * @return success Operation result / 操作结果
      */
-    function setUserData(address targetUser, bytes32 key, bytes calldata data) external notEmergency returns (bool) {
-        require(targetUser != address(0), "User address cannot be zero");
-        require(keyManagers[key] == msg.sender, "Only config key manager");
+    function setUserData(address user, bytes32 key, bytes calldata data) external notEmergency returns (bool) {
+        require(user != address(0), "User address cannot be zero");
+        require(keyManagers[key] == msg.sender, "Only key manager");
         
         if (data.length == 0) {
-            delete userData[key][targetUser];
+            delete userData[key][user];
         } else {
-            userData[key][targetUser] = Storage(uint64(block.timestamp), data);
+            userData[key][user] = Storage(uint64(block.timestamp), data);
         }
         
-        emit UserDataUpdated(targetUser, key, data.length, msg.sender);
+        emit UserDataUpdated(user, key, data.length, msg.sender);
         return true;
     }
 
     /**
-     * @dev Get stored data for user (only config key manager) / 获取用户的存储数据（仅配置键管理者）
-     * @param targetUser User address / 用户地址
+     * @dev Get stored data for user (only key manager) / 获取用户的存储数据（仅键管理者）
+     * @param user User address / 用户地址
      * @param key Configuration key / 配置键
      * @return data Stored data / 存储的数据
      * @return timestamp Last update timestamp / 最后更新时间戳
      */
-    function getUserData(address targetUser, bytes32 key) external view returns (bytes memory data, uint64 timestamp) {
-        require(targetUser != address(0), "User address cannot be zero");
-        require(keyManagers[key] == msg.sender, "Only config key manager");
+    function getUserData(address user, bytes32 key) external view returns (bytes memory data, uint64 timestamp) {
+        require(user != address(0), "User address cannot be zero");
+        require(keyManagers[key] == msg.sender, "Only key manager");
         
-        Storage storage storageData = userData[key][targetUser];
+        Storage storage storageData = userData[key][user];
         data = storageData.data;
         timestamp = storageData.timestamp;
         return (data, timestamp);
     }
 
     /**
-     * @dev Store shared data (only config key manager) / 存储共享数据（仅配置键管理者）
+     * @dev Store shared data (only key manager) / 存储共享数据（仅键管理者）
      * @param key Configuration key / 配置键
      * @param sharedValueId Unique identifier for the value / 值的唯一标识符
      * @param data Data to store / 要存储的数据
@@ -341,9 +341,9 @@ contract FairdaoStorage {
     }
 
     /**
-     * @dev Get config key at specific index / 获取特定索引的配置键
-     * @param index Index in the config key array / 配置键数组中的索引
-     * @return key Configuration key value / 配置键值
+     * @dev Get key at specific index / 获取特定索引的键
+     * @param index Index in the key array / 键数组中的索引
+     * @return key Key value / 键值
      */
     function getKeyAtIndex(uint256 index) external view returns (bytes32) {
         require(index < keyArray.length, "Index out of bounds");
