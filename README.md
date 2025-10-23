@@ -30,6 +30,11 @@ The User Data Storage Repository Contract is FAIR DAO's primary backend data sto
 - **Key Information**: Access registered keys and their assigned managers
 - **Contract Status**: Check if the contract is in emergency stop mode
 
+### 6. Token Operations
+- **Token Deposits**: Deposit tokens to user accounts
+- **Token Withdrawals**: Withdraw tokens from user accounts
+- **Balance Queries**: Check token balances for users
+
 ## Contract Functions
 
 ### Manager Management
@@ -49,6 +54,11 @@ The User Data Storage Repository Contract is FAIR DAO's primary backend data sto
 - `getUserData(address targetUser, bytes32 key)`: Retrieve user-specific data
 - `setSharedData(bytes32 key, bytes32 sharedValueId, bytes data)`: Store shared data
 - `getSharedData(bytes32 key, bytes32 sharedValueId)`: Retrieve shared data
+
+### Token Operations
+- `depositTokens(address user, bytes32 key, uint256 amount)`: Deposit tokens to a user account
+- `withdrawTokens(address user, bytes32 key, uint256 amount)`: Withdraw tokens from a user account
+- `getTokenBalance(address user, bytes32 key)`: Check a user's token balance
 
 ### Security Functions
 - `enableEmergencyStop()`: Pause critical contract operations

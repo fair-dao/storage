@@ -30,6 +30,11 @@ El Contrato de Repositorio de Datos de Usuario es el servicio principal de almac
 - **Información de claves**: Acceder a claves registradas y sus administradores asignados
 - **Estado del contrato**: Comprobar si el contrato está en modo de parada de emergencia
 
+### 6. Operaciones de tokens
+- **Depósito de tokens**: Depositar tokens en la cuenta de un usuario
+- **Retiro de tokens**: Retirar tokens de la cuenta de un usuario
+- **Consulta de saldo**: Consultar el saldo de tokens de un usuario
+
 ## Funciones del contrato
 
 ### Gestión de administradores
@@ -49,6 +54,11 @@ El Contrato de Repositorio de Datos de Usuario es el servicio principal de almac
 - `getUserData(address targetUser, bytes32 key)`: Recuperar datos específicos del usuario
 - `setSharedData(bytes32 key, bytes32 sharedValueId, bytes data)`: Almacenar datos compartidos
 - `getSharedData(bytes32 key, bytes32 sharedValueId)`: Recuperar datos compartidos
+
+### Operaciones de tokens
+- `depositTokens(address user, bytes32 key, uint256 amount)`: Depositar tokens en la cuenta de un usuario
+- `withdrawTokens(address user, bytes32 key, uint256 amount)`: Retirar tokens de la cuenta de un usuario
+- `getTokenBalance(address user, bytes32 key)`: Consultar el saldo de tokens de un usuario
 
 ### Funciones de seguridad
 - `enableEmergencyStop()`: Pausar operaciones críticas del contrato

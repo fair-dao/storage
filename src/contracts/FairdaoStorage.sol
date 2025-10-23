@@ -52,6 +52,20 @@ contract FairdaoStorage {
         address indexed writer
     );
     
+    event TokenDeposited(
+        address indexed user,
+        bytes32 indexed key,
+        uint256 amount,
+        address indexed operator
+    );
+    
+    event TokenWithdrawn(
+        address indexed user,
+        bytes32 indexed key,
+        uint256 amount,
+        address indexed operator
+    );
+    
 
 
     mapping(address => ManagerInfo) public managers;
@@ -65,6 +79,9 @@ contract FairdaoStorage {
     mapping(bytes32 => mapping(address => Storage)) private userData;
     
     mapping(bytes32 => mapping(bytes32 => Storage)) private sharedData;
+    
+    // 用户代币余额映射：键 => 用户 => 余额
+    mapping(bytes32 => mapping(address => uint256)) private tokenBalances;
 
     bool private emergencyStop = false;
     
@@ -349,6 +366,57 @@ contract FairdaoStorage {
         require(index < keyArray.length, "Index out of bounds");
         return keyArray[index];
     }
-
+    
+    /**
+     * @dev 存入代币到用户账户（仅键管理者）
+     * @param user 用户地址
+     * @param key 键
+     * @param amount 存入金额
+     * @return success 操作结果
+     */
+    function depositTokens(address user, bytes32 key, uint256 amount) external notEmergency returns (bool) {
+        require(user != address(0), "User address cannot be zero");
+        require(amount > 0, "Amount must be greater than zero");
+        require(keyManagers[key] == msg.sender, "Only key manager");
+        
+        // 增加用户余额
+        tokenBalances[key][user] += amount;
+        
+        emit TokenDeposited(user, key, amount, msg.sender);
+        return true;
+    }
+    
+    /**
+     * @dev 从用户账户取出代币（仅键管理者）
+     * @param user 用户地址
+     * @param key 键
+     * @param amount 取出金额
+     * @return success 操作结果
+     */
+    function withdrawTokens(address user, bytes32 key, uint256 amount) external notEmergency returns (bool) {
+        require(user != address(0), "User address cannot be zero");
+        require(amount > 0, "Amount must be greater than zero");
+        require(keyManagers[key] == msg.sender, "Only key manager");
+        require(tokenBalances[key][user] >= amount, "Insufficient balance");
+        
+        // 减少用户余额
+        tokenBalances[key][user] -= amount;
+        
+        emit TokenWithdrawn(user, key, amount, msg.sender);
+        return true;
+    }
+    
+    /**
+     * @dev 查询用户代币余额（仅键管理者）
+     * @param user 用户地址
+     * @param key 键
+     * @return balance 用户余额
+     */
+    function getTokenBalance(address user, bytes32 key) external view returns (uint256 balance) {        
+        return tokenBalances[key][user];
+    }
+    
+    
+    
 
 }

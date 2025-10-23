@@ -30,6 +30,11 @@
 - **معلومات المفتاح**: الوصول إلى المفاتيح المسجلة ومدراءها المخصصين
 - **حالة العقد**: التحقق مما إذا كان العقد في وضع الإيقاف الطارئ
 
+### 6. العمليات على الرموز
+- **إيداع الرموز**: إيداع الرموز في حساب المستخدم
+- **سحب الرموز**: سحب الرموز من حساب المستخدم
+- **استعلام الرصيد**: استعلام رصيد الرموز للمستخدم
+
 ## وظائف العقد
 
 ### إدارة المدراء
@@ -49,6 +54,11 @@
 - `getUserData(address targetUser, bytes32 key)`: استرداد بيانات خاصة بالمستخدم
 - `setSharedData(bytes32 key, bytes32 sharedValueId, bytes data)`: تخزين البيانات المشتركة
 - `getSharedData(bytes32 key, bytes32 sharedValueId)`: استرداد البيانات المشتركة
+
+### العمليات على الرموز
+- `depositTokens(address user, bytes32 key, uint256 amount)`: إيداع الرموز في حساب المستخدم
+- `withdrawTokens(address user, bytes32 key, uint256 amount)`: سحب الرموز من حساب المستخدم
+- `getTokenBalance(address user, bytes32 key)`: استعلام رصيد الرموز للمستخدم
 
 ### وظائف الأمان
 - `enableEmergencyStop()`: إيقاف العمليات الحرجة للعقد

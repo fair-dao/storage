@@ -30,6 +30,11 @@
 - **键信息**：访问已注册的键及其分配的管理者
 - **合约状态**：检查合约是否处于紧急停止模式
 
+### 6. 代币操作
+- **代币存入**：向用户账户存入代币
+- **代币取出**：从用户账户取出代币
+- **余额查询**：查询用户的代币余额
+
 ## 合约功能
 
 ### 管理者管理
@@ -49,6 +54,11 @@
 - `getUserData(address targetUser, bytes32 key)`：检索用户特定数据
 - `setSharedData(bytes32 key, bytes32 sharedValueId, bytes data)`：存储共享数据
 - `getSharedData(bytes32 key, bytes32 sharedValueId)`：检索共享数据
+
+### 代币操作
+- `depositTokens(address user, bytes32 key, uint256 amount)`：向用户账户存入代币
+- `withdrawTokens(address user, bytes32 key, uint256 amount)`：从用户账户取出代币
+- `getTokenBalance(address user, bytes32 key)`：查询用户的代币余额
 
 ### 安全功能
 - `enableEmergencyStop()`：暂停合约的关键操作

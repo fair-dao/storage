@@ -30,6 +30,11 @@ Le contrat de dépôt de données utilisateur est le service de stockage de donn
 - **Informations sur les Clés**: Accéder aux clés enregistrées et leurs administrateurs attribués
 - **État du Contrat**: Vérifier si le contrat est en mode d'arrêt d'urgence
 
+### 6. Opérations sur les Tokens
+- **Dépôt de Tokens**: Déposer des tokens sur le compte d'un utilisateur
+- **Retrait de Tokens**: Retirer des tokens du compte d'un utilisateur
+- **Consultation de Solde**: Consulter le solde de tokens d'un utilisateur
+
 ## Fonctions du Contrat
 
 ### Gestion des Administrateurs
@@ -49,6 +54,11 @@ Le contrat de dépôt de données utilisateur est le service de stockage de donn
 - `getUserData(address targetUser, bytes32 key)`: Récupérer des données spécifiques à un utilisateur
 - `setSharedData(bytes32 key, bytes32 sharedValueId, bytes data)`: Stocker des données partagées
 - `getSharedData(bytes32 key, bytes32 sharedValueId)`: Récupérer des données partagées
+
+### Opérations sur les Tokens
+- `depositTokens(address user, bytes32 key, uint256 amount)`: Déposer des tokens sur le compte d'un utilisateur
+- `withdrawTokens(address user, bytes32 key, uint256 amount)`: Retirer des tokens du compte d'un utilisateur
+- `getTokenBalance(address user, bytes32 key)`: Consulter le solde de tokens d'un utilisateur
 
 ### Fonctions de Sécurité
 - `enableEmergencyStop()`: Arrêter les opérations critiques du contrat
