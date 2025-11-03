@@ -31,9 +31,11 @@
 - **Состояние контракта**: Проверка, находится ли контракт в режиме аварийной остановки
 
 ### 6. Операции с токенами
-- **Зачисление токенов**: Пополнение баланса токенов пользователя
-- **Вывод токенов**: Снятие токенов с баланса пользователя
-- **Проверка баланса**: Просмотр баланса токенов пользователя
+- **Зачисление токенов**: Пополнение баланса токенов пользователя (только менеджер ключа)
+- **Вывод токенов**: Снятие токенов с баланса пользователя (только менеджер ключа)
+- **Проверка баланса**: Просмотр баланса токенов пользователя (открытый доступ)
+- **Выпуск событий**: Генерация событий для всех переводов токенов для прозрачного отслеживания
+- **Передача управления ключом**: Передача прав управления ключом другому адресу (только менеджер ключа)
 
 ## Функции контракта
 
@@ -45,7 +47,7 @@
 - `getManagerCount()`: Получить общее количество менеджеров
 
 ### Управление ключами
-- `setKeyManagers(bytes32[] keys, address oldManager, address manager)`: Установить менеджеров для нескольких ключей
+- `addKeyManagers(bytes32[] keys, address manager)`: Добавить менеджера для нескольких ключей (только менеджер) - работает только если ключи не имеют существующего менеджера
 - `isKeyManager(bytes32 key, address user)`: Проверить, является ли адрес менеджером для определенного ключа
 - `getKeyAtIndex(uint256 index)`: Получить ключ по определенному индексу
 
@@ -56,9 +58,18 @@
 - `getSharedData(bytes32 key, bytes32 sharedValueId)`: Извлечь общие данные
 
 ### Операции с токенами
-- `depositTokens(address user, bytes32 key, uint256 amount)`: Пополнить баланс токенов пользователя
-- `withdrawTokens(address user, bytes32 key, uint256 amount)`: Снять токены с баланса пользователя
-- `getTokenBalance(address user, bytes32 key)`: Просмотреть баланс токенов пользователя
+- `depositTokens(address user, bytes32 key, uint256 amount)`: Пополнить баланс токенов пользователя (только менеджер ключа)
+- `withdrawTokens(address user, bytes32 key, uint256 amount)`: Снять токены с баланса пользователя (только менеджер ключа)
+- `getTokenBalance(address user, bytes32 key)`: Просмотреть баланс токенов пользователя (открытый доступ)
+- `transferKeyManagement(bytes32 key, address newManager)`: Передача управления ключом другому адресу (только менеджер ключа)
+
+### События
+- `AddKeyManager(bytes32 indexed key, address indexed manager, address writer)`: Генерируется при добавлении менеджера ключа
+- `TransferKeyManager(bytes32 indexed key, address indexed oldManager, address indexed newManager, address writer)`: Генерируется при передаче управления ключом
+- `TokenDeposited(address user, bytes32 key, uint256 amount, address operator)`: Генерируется при зачислении токенов
+- `TokenWithdrawn(address user, bytes32 key, uint256 amount, address operator)`: Генерируется при снятии токенов
+- `EmergencyStopped(address operator)`: Генерируется при включении аварийной остановки
+- `EmergencyResumed(address operator)`: Генерируется при отключении аварийной остановки
 
 ### Безопасность
 - `enableEmergencyStop()`: Приостановить критические операции контракта

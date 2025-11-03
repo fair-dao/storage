@@ -31,9 +31,11 @@ Le contrat de dépôt de données utilisateur est le service de stockage de donn
 - **État du Contrat**: Vérifier si le contrat est en mode d'arrêt d'urgence
 
 ### 6. Opérations sur les Tokens
-- **Dépôt de Tokens**: Déposer des tokens sur le compte d'un utilisateur
-- **Retrait de Tokens**: Retirer des tokens du compte d'un utilisateur
-- **Consultation de Solde**: Consulter le solde de tokens d'un utilisateur
+- **Dépôt de Tokens**: Déposer des tokens sur le compte d'un utilisateur (seul l'administrateur de clé)
+- **Retrait de Tokens**: Retirer des tokens du compte d'un utilisateur (seul l'administrateur de clé)
+- **Consultation de Solde**: Consulter le solde de tokens d'un utilisateur (accès public)
+- **Émission d'Événements**: Émettre des événements pour tous les transferts de tokens pour un suivi transparent
+- **Transfert de Gestion de Clés**: Transférer la gestion d'une clé à une autre adresse (seul l'administrateur de clé)
 
 ## Fonctions du Contrat
 
@@ -45,8 +47,8 @@ Le contrat de dépôt de données utilisateur est le service de stockage de donn
 - `getManagerCount()`: Obtenir le nombre total d'administrateurs
 
 ### Gestion des Clés
-- `setKeyManagers(bytes32[] keys, address oldManager, address manager)`: Définir des administrateurs pour plusieurs clés
-- `isKeyManager(bytes32 key, address user)`: Vérifier si une adresse est un administrateur d'une clé spécifique
+- `addKeyManagers(bytes32[] keys, address manager)`: Ajouter un administrateur pour plusieurs clés (seul l'administrateur) - ne fonctionne que si les clés n'ont pas d'administrateur existant
+- `isKeyManager(bytes32 key, address user)`: Vérifier si une adresse est un administrateur pour une clé spécifique
 - `getKeyAtIndex(uint256 index)`: Obtenir une clé à un index spécifique
 
 ### Opérations sur les Données
@@ -56,9 +58,18 @@ Le contrat de dépôt de données utilisateur est le service de stockage de donn
 - `getSharedData(bytes32 key, bytes32 sharedValueId)`: Récupérer des données partagées
 
 ### Opérations sur les Tokens
-- `depositTokens(address user, bytes32 key, uint256 amount)`: Déposer des tokens sur le compte d'un utilisateur
-- `withdrawTokens(address user, bytes32 key, uint256 amount)`: Retirer des tokens du compte d'un utilisateur
-- `getTokenBalance(address user, bytes32 key)`: Consulter le solde de tokens d'un utilisateur
+- `depositTokens(address user, bytes32 key, uint256 amount)`: Déposer des tokens sur le compte d'un utilisateur (seul l'administrateur de clé)
+- `withdrawTokens(address user, bytes32 key, uint256 amount)`: Retirer des tokens du compte d'un utilisateur (seul l'administrateur de clé)
+- `getTokenBalance(address user, bytes32 key)`: Consulter le solde de tokens d'un utilisateur (accès public)
+- `transferKeyManagement(bytes32 key, address newManager)`: Transférer la gestion d'une clé à une autre adresse (seul l'administrateur de clé)
+
+### Événements
+- `AddKeyManager(bytes32 indexed key, address indexed manager, address writer)`: Émis lors de l'ajout d'un administrateur de clé
+- `TransferKeyManager(bytes32 indexed key, address indexed oldManager, address indexed newManager, address writer)`: Émis lors du transfert de la gestion d'une clé
+- `TokenDeposited(address user, bytes32 key, uint256 amount, address operator)`: Émis lors du dépôt de tokens
+- `TokenWithdrawn(address user, bytes32 key, uint256 amount, address operator)`: Émis lors du retrait de tokens
+- `EmergencyStopped(address operator)`: Émis lors de l'activation de l'arrêt d'urgence
+- `EmergencyResumed(address operator)`: Émis lors de la reprise de l'arrêt d'urgence
 
 ### Fonctions de Sécurité
 - `enableEmergencyStop()`: Arrêter les opérations critiques du contrat
