@@ -30,6 +30,13 @@ El Contrato de Repositorio de Datos de Usuario es el servicio principal de almac
 - **Información de claves**: Acceder a claves registradas y sus administradores asignados
 - **Estado del contrato**: Comprobar si el contrato está en modo de parada de emergencia
 
+### 6. Operaciones de tokens
+- **Depósito de tokens**: Depositar tokens en la cuenta de un usuario (solo administrador de clave)
+- **Retiro de tokens**: Retirar tokens de la cuenta de un usuario (solo administrador de clave)
+- **Consulta de saldo**: Consultar el saldo de tokens de un usuario (acceso público)
+- **Transferencia de gestión de claves**: Transferir la gestión de claves a otras direcciones (solo administrador de clave)
+- **Emisión de eventos**: Emitir eventos para todas las transferencias de tokens para un seguimiento transparente
+
 ## Funciones del contrato
 
 ### Gestión de administradores
@@ -40,8 +47,8 @@ El Contrato de Repositorio de Datos de Usuario es el servicio principal de almac
 - `getManagerCount()`: Obtener el número total de administradores
 
 ### Gestión de claves
-- `setKeyManagers(bytes32[] keys, address oldManager, address manager)`: Establecer administradores para múltiples claves
-- `isKeyManager(bytes32 key, address user)`: Comprobar si una dirección es un administrador para una clave específica
+- `addKeyManagers(bytes32[] keys, address manager)`: Añadir administrador para múltiples claves (solo administrador) - solo funciona si las claves no tienen un administrador existente
+- `isKeyManager(bytes32 key, address user)`: Verificar si una dirección es administrador de una clave específica
 - `getKeyAtIndex(uint256 index)`: Obtener una clave en un índice específico
 
 ### Operaciones de datos
@@ -49,6 +56,20 @@ El Contrato de Repositorio de Datos de Usuario es el servicio principal de almac
 - `getUserData(address targetUser, bytes32 key)`: Recuperar datos específicos del usuario
 - `setSharedData(bytes32 key, bytes32 sharedValueId, bytes data)`: Almacenar datos compartidos
 - `getSharedData(bytes32 key, bytes32 sharedValueId)`: Recuperar datos compartidos
+
+### Operaciones de tokens
+- `depositTokens(address user, bytes32 key, uint256 amount)`: Depositar tokens en la cuenta de un usuario (solo administrador de clave)
+- `withdrawTokens(address user, bytes32 key, uint256 amount)`: Retirar tokens de la cuenta de un usuario (solo administrador de clave)
+- `getTokenBalance(address user, bytes32 key)`: Consultar el saldo de tokens de un usuario (acceso público)
+- `transferKeyManagement(bytes32 key, address newManager)`: Transferir la gestión de claves a otra dirección (solo administrador de clave)
+
+### Eventos
+- `AddKeyManager(bytes32 indexed key, address indexed manager, address writer)`: Emitido cuando se agrega un administrador de clave
+- `TransferKeyManager(bytes32 indexed key, address indexed oldManager, address indexed newManager, address writer)`: Emitido cuando se transfiere la gestión de una clave
+- `TokenDeposited(address user, bytes32 key, uint256 amount, address operator)`: Emitido cuando se depositan tokens
+- `TokenWithdrawn(address user, bytes32 key, uint256 amount, address operator)`: Emitido cuando se retiran tokens
+- `EmergencyStopped(address operator)`: Emitido cuando se activa la parada de emergencia
+- `EmergencyResumed(address operator)`: Emitido cuando se reanuda la parada de emergencia
 
 ### Funciones de seguridad
 - `enableEmergencyStop()`: Pausar operaciones críticas del contrato

@@ -30,6 +30,13 @@
 - **معلومات المفتاح**: الوصول إلى المفاتيح المسجلة ومدراءها المخصصين
 - **حالة العقد**: التحقق مما إذا كان العقد في وضع الإيقاف الطارئ
 
+### 6. العمليات على الرموز
+- **إيداع الرموز**: إيداع الرموز في حساب المستخدم (فقط مدير المفتاح)
+- **سحب الرموز**: سحب الرموز من حساب المستخدم (فقط مدير المفتاح)
+- **استعلام الرصيد**: استعلام رصيد الرموز للمستخدم (وصول عام)
+- **إرسال أحداث**: إرسال أحداث لكل عمليات تحويل الرموز للمراقبة الشفافة
+- **نقل إدارة المفتاح**: نقل إدارة المفتاح إلى عنوان آخر (فقط مدير المفتاح)
+
 ## وظائف العقد
 
 ### إدارة المدراء
@@ -40,7 +47,7 @@
 - `getManagerCount()`: الحصول على العدد الإجمالي للمدراء
 
 ### إدارة المفاتيح
-- `setKeyManagers(bytes32[] keys, address oldManager, address manager)`: تعيين مدراء للمفاتيح المتعددة
+- `addKeyManagers(bytes32[] keys, address manager)`: إضافة مشرف لعدة مفاتيح (فقط المشرف) - تعمل فقط إذا كانت المفاتيح بدون مشرف موجود
 - `isKeyManager(bytes32 key, address user)`: التحقق مما إذا كان العنوان مديرًا لمفتاح معين
 - `getKeyAtIndex(uint256 index)`: الحصول على مفتاح في فهرس محدد
 
@@ -49,6 +56,20 @@
 - `getUserData(address targetUser, bytes32 key)`: استرداد بيانات خاصة بالمستخدم
 - `setSharedData(bytes32 key, bytes32 sharedValueId, bytes data)`: تخزين البيانات المشتركة
 - `getSharedData(bytes32 key, bytes32 sharedValueId)`: استرداد البيانات المشتركة
+
+### العمليات على الرموز
+- `depositTokens(address user, bytes32 key, uint256 amount)`: إيداع الرموز في حساب المستخدم (فقط مدير المفتاح)
+- `withdrawTokens(address user, bytes32 key, uint256 amount)`: سحب الرموز من حساب المستخدم (فقط مدير المفتاح)
+- `getTokenBalance(address user, bytes32 key)`: استرداد رصيد الرموز للمستخدم (وصول عام)
+- `transferKeyManagement(bytes32 key, address newManager)`: نقل إدارة المفتاح إلى عنوان آخر (فقط مدير المفتاح)
+
+### الأحداث
+- `AddKeyManager(bytes32 indexed key, address indexed manager, address writer)`: يتم إرساله عند إضافة مدير المفتاح
+- `TransferKeyManager(bytes32 indexed key, address indexed oldManager, address indexed newManager, address writer)`: يتم إرساله عند نقل إدارة المفتاح
+- `TokenDeposited(address user, bytes32 key, uint256 amount, address operator)`: يتم إرساله عند إيداع الرموز
+- `TokenWithdrawn(address user, bytes32 key, uint256 amount, address operator)`: يتم إرساله عند سحب الرموز
+- `EmergencyStopped(address operator)`: يتم إرساله عند تفعيل الإيقاف الطارئ
+- `EmergencyResumed(address operator)`: يتم إرساله عند إعادة نشاط الإيقاف الطارئ
 
 ### وظائف الأمان
 - `enableEmergencyStop()`: إيقاف العمليات الحرجة للعقد

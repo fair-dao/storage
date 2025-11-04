@@ -10,6 +10,7 @@
 ### 1. 管理者管理
 - **添加/移除管理者**：所有者可以添加或移除具有可配置权限的管理者
 - **基于角色的访问控制**：区分常规管理者和拥有更高权限的所有者
+- **优化的权限检查**：直接状态验证提高gas效率和执行性能
 
 ### 2. 键管理
 - **键管理者分配**：为特定键分配特定的管理者以控制访问权限
@@ -24,11 +25,20 @@
 ### 4. 安全机制
 - **紧急停止**：在发生安全事件时暂停合约的关键操作
 - **权限验证**：对所有敏感操作进行严格的访问控制
+- **优化的安全模式**：高效的状态变量访问增强安全性并降低gas成本
 
 ### 5. 查询功能
 - **管理者信息**：检索管理者列表及其权限
 - **键信息**：访问已注册的键及其分配的管理者
 - **合约状态**：检查合约是否处于紧急停止模式
+
+### 6. 代币操作
+
+- **代币存入**：向用户账户存入代币（仅键管理者）
+- **代币取出**：从用户账户取出代币（仅键管理者）
+- **余额查询**：查询用户的代币余额（公开访问）
+- **键管理权转让**：将键管理权转让给其他地址（仅键管理者）
+- **事件触发**：为所有代币转移操作触发事件，确保透明追踪
 
 ## 合约功能
 
@@ -38,9 +48,10 @@
 - `isManager(address user)`：检查地址是否为管理者
 - `getOwnerCount()`：获取所有者数量
 - `getManagerCount()`：获取管理者总数
+- **优化的权限修饰器**：使用`managers[msg.sender].timestamp > 0`直接检查状态，而不是外部函数调用，提高gas效率
 
 ### 键管理
-- `setKeyManagers(bytes32[] keys, address oldManager, address manager)`：为多个键设置管理者
+- `addKeyManagers(bytes32[] keys, address manager)`：为多个键添加管理者（仅管理者）- 仅在键没有现有管理者时有效
 - `isKeyManager(bytes32 key, address user)`：检查地址是否为特定键的管理者
 - `getKeyAtIndex(uint256 index)`：获取特定索引处的键
 
@@ -49,6 +60,21 @@
 - `getUserData(address targetUser, bytes32 key)`：检索用户特定数据
 - `setSharedData(bytes32 key, bytes32 sharedValueId, bytes data)`：存储共享数据
 - `getSharedData(bytes32 key, bytes32 sharedValueId)`：检索共享数据
+
+### 代币操作
+
+- `depositTokens(address user, bytes32 key, uint256 amount)`：向用户账户存入代币（仅键管理者）
+- `withdrawTokens(address user, bytes32 key, uint256 amount)`：从用户账户取出代币（仅键管理者）
+- `getTokenBalance(address user, bytes32 key)`：查询用户的代币余额（公开访问）
+- `transferKeyManagement(bytes32 key, address newManager)`：转让键管理权给其他地址（仅键管理者）
+
+### 事件
+- `AddKeyManager(bytes32 indexed key, address indexed manager, address writer)`：添加键管理者时触发
+- `TransferKeyManager(bytes32 indexed key, address indexed oldManager, address indexed newManager, address writer)`：转让键管理权时触发
+- `TokenDeposited(address user, bytes32 key, uint256 amount, address operator)`：代币存入时触发
+- `TokenWithdrawn(address user, bytes32 key, uint256 amount, address operator)`：代币取出时触发
+- `EmergencyStopped(address operator)`：启用紧急停止时触发
+- `EmergencyResumed(address operator)`：恢复紧急停止时触发
 
 ### 安全功能
 - `enableEmergencyStop()`：暂停合约的关键操作
