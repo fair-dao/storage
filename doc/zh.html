@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FairdaoStorage 合约 API 文档</title>
+    <!-- 集成 Bulma v1.0 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="#">
+                <span class="title is-4 has-text-white">FairdaoStorage</span>
+            </a>
+            
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="#overview">概述</a>
+                <a class="navbar-item" href="#contracts">合约</a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link" href="#events">事件</a>
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" href="#fairdao-events">FairdaoManagement 事件</a>
+                        <a class="navbar-item" href="#user-events">UserDataStorage 事件</a>
+                        <a class="navbar-item" href="#shared-events">SharedDataStorage 事件</a>
+                    </div>
+                </div>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link" href="#functions">函数</a>
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" href="#fairdao-functions">FairdaoManagement 函数</a>
+                        <a class="navbar-item" href="#user-functions">UserDataStorage 函数</a>
+                        <a class="navbar-item" href="#shared-functions">SharedDataStorage 函数</a>
+                    </div>
+                </div>
+                <a class="navbar-item" href="#modifiers">修饰器</a>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                          <a href="zh.html" class="button is-light">
+                            <i class="fas fa-language"></i> 中文
+                        </a>
+                          <a href="en.html" class="button is-light">
+                            <i class="fas fa-language"></i> English
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        <div class="columns">
+            <!-- 侧边栏导航 -->
+            <div class="column is-3">
+                <aside class="sidebar p-4">
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 class="title is-5 mb-4">导航</h3>
+                            <ul class="menu-list">
+                                <li><a href="#overview">概述</a></li>
+                                <li><a href="#contracts">合约</a></li>
+                                <li>
+                                    <a href="#events">事件</a>
+                                    <ul class="ml-4 mt-2">
+                                        <li><a href="#fairdao-events">FairdaoManagement 事件</a></li>
+                                        <li><a href="#user-events">UserDataStorage 事件</a></li>
+                                        <li><a href="#shared-events">SharedDataStorage 事件</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#functions">函数</a>
+                                    <ul class="ml-4 mt-2">
+                                        <li><a href="#fairdao-functions">FairdaoManagement 函数</a></li>
+                                        <li><a href="#user-functions">UserDataStorage 函数</a></li>
+                                        <li><a href="#shared-functions">SharedDataStorage 函数</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#modifiers">修饰器</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- 主内容区域 -->
+            <div class="column is-9">
+                <!-- 概述 -->
+                <section id="overview" class="api-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-title">概述</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <h1 class="title is-2">FairdaoStorage 非接口合约</h1>
+                                <p>本文档包含 FairdaoStorage 项目中的三个非接口合约：FairdaoManagement、UserDataStorage 和 SharedDataStorage。</p>
+                                <p>这些合约提供了 DAO 的核心功能，包括管理员管理、密钥管理、用户数据存储和共享数据存储。</p>
+                                
+                                <div class="mt-4">
+                                    <h3 class="subtitle is-4">许可证</h3>
+                                    <p>SPDX-License-Identifier: GPL-3.0</p>
+                                </div>
+                                
+                                <div class="mt-4">
+                                    <h3 class="subtitle is-4">Solidity 版本</h3>
+                                    <p>^0.8.24</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 合约结构 -->
+                <section id="contracts" class="api-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-title">合约</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <!-- FairdaoManagement -->
+                                <div class="mb-6">
+                                    <h3 class="subtitle is-4">FairdaoManagement</h3>
+                                    <p>FAIR DAO 管理合约，提供管理员、所有者和密钥管理器的管理功能。</p>
+                                    <p>实现了 IFairdaoManager 接口，处理访问控制、紧急停止机制和密钥管理操作。</p>
+                                </div>
+                                
+                                <!-- UserDataStorage -->
+                                <div class="mb-6">
+                                    <h3 class="subtitle is-4">UserDataStorage</h3>
+                                    <p>用户数据存储合约，负责管理特定于用户的数据。</p>
+                                    <p>允许密钥管理员为特定用户存储和检索数据。</p>
+                                </div>
+                                
+                                <!-- SharedDataStorage -->
+                                <div class="mb-6">
+                                    <h3 class="subtitle is-4">SharedDataStorage</h3>
+                                    <p>共享数据存储合约，负责管理所有用户共享的数据。</p>
+                                    <p>允许密钥管理员存储和检索可被所有用户访问的数据。</p>
+                                </div>
+                                
+                                <h3 class="subtitle is-4">数据结构</h3>
+                                
+                                <div class="mb-4">
+                                    <h4 class="title is-5">Storage 结构 (UserDataStorage 和 SharedDataStorage)</h4>
+                                    <div class="code-block">
+<pre>struct Storage {
+    uint64 timestamp; // 时间戳
+    bytes data;       // 数据内容
+}</pre>
+                                    </div>
+                                    <p class="mt-2">用于存储数据及其时间戳的结构。</p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h4 class="title is-5">ManagerInfo 结构 (FairdaoManagement)</h4>
+                                    <div class="code-block">
+<pre>struct ManagerInfo {
+    uint64 timestamp; // 时间戳
+    bool isOwner;     // 是否为所有者
+}</pre>
+                                    </div>
+                                    <p class="mt-2">存储管理员信息的结构，包括创建时间戳和所有者权限标记。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 事件 -->
+                <section id="events" class="api-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-title">事件</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <!-- FairdaoManagement 事件 -->
+                                <div id="fairdao-events" class="mb-6">
+                                    <h3 class="subtitle is-4">FairdaoManagement 事件</h3>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">
+                                            event ManagerAdded(
+                                                address indexed manager,
+                                                bool isOwner,
+                                                address indexed operator
+                                            )
+                                        </div>
+                                        <div class="tag is-success">添加</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">当添加新管理员时触发。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>manager</code> - 被添加的管理员地址</li>
+                                            <li><code>isOwner</code> - 该管理员是否为所有者</li>
+                                            <li><code>operator</code> - 执行添加操作的地址</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">
+                                            event ManagerRemoved(
+                                                address indexed manager,
+                                                bool wasOwner,
+                                                address indexed operator
+                                            )
+                                        </div>
+                                        <div class="tag is-danger">移除</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">当移除管理员时触发。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>manager</code> - 被移除的管理员地址</li>
+                                            <li><code>wasOwner</code> - 该管理员是否曾经是所有者</li>
+                                            <li><code>operator</code> - 执行移除操作的地址</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">
+                                            event AddKeyManager(
+                                                bytes32 indexed key,
+                                                address manager,
+                                                address indexed operator
+                                            )
+                                        </div>
+                                        <div class="tag is-success">添加</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">当添加密钥管理员时触发。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>key</code> - 被管理的密钥</li>
+                                            <li><code>manager</code> - 密钥管理员的地址</li>
+                                            <li><code>operator</code> - 执行添加操作的地址</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">
+                                            event TransferKeyManager(
+                                                bytes32 indexed key,
+                                                address oldManager,
+                                                address newManager,
+                                                address indexed operator
+                                            )
+                                        </div>
+                                        <div class="tag is-warning">转移</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">当密钥管理权限被转移时触发。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>key</code> - 被管理的密钥</li>
+                                            <li><code>oldManager</code> - 先前的管理员地址</li>
+                                            <li><code>newManager</code> - 新的管理员地址</li>
+                                            <li><code>operator</code> - 执行转移操作的地址</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">event EmergencyStopped(address indexed operator)</div>
+                                        <div class="tag is-info">紧急状态</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">当启用紧急停止时触发。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>operator</code> - 触发紧急停止的地址</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">event EmergencyResumed(address indexed operator)</div>
+                                        <div class="tag is-success">恢复操作</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">当禁用紧急停止时触发。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>operator</code> - 恢复操作的地址</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- UserDataStorage 事件 -->
+                                <div id="user-events" class="mb-6">
+                                    <h3 class="subtitle is-4">UserDataStorage 事件</h3>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">
+                                            event UserDataUpdated(
+                                                address indexed user,
+                                                bytes32 indexed key,
+                                                uint256 dataLength,
+                                                address indexed operator
+                                            )
+                                        </div>
+                                        <div class="tag is-info">更新</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">当用户数据被更新时触发。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>user</code> - 用户地址</li>
+                                            <li><code>key</code> - 用于存储数据的密钥</li>
+                                            <li><code>dataLength</code> - 存储数据的长度</li>
+                                            <li><code>operator</code> - 执行更新操作的地址</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">
+                                            event FairdaoManagerSet(
+                                                address indexed managerAddress,
+                                                address indexed operator
+                                            )
+                                        </div>
+                                        <div class="tag is-info">更新</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">当FairdaoManager地址被设置或更新时触发。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>managerAddress</code> - 新的FairdaoManager地址</li>
+                                            <li><code>operator</code> - 执行更新操作的地址</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- SharedDataStorage 事件 -->
+                                <div id="shared-events" class="mb-6">
+                                    <h3 class="subtitle is-4">SharedDataStorage 事件</h3>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">
+                                            event SharedDataUpdated(
+                                                bytes32 indexed key,
+                                                bytes32 indexed valueId,
+                                                uint256 dataLength,
+                                                address indexed operator
+                                            )
+                                        </div>
+                                        <div class="tag is-info">更新</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">当共享数据被更新时触发。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>key</code> - 用于存储数据的密钥</li>
+                                            <li><code>valueId</code> - 值的唯一标识符</li>
+                                            <li><code>dataLength</code> - 存储数据的长度</li>
+                                            <li><code>operator</code> - 执行更新操作的地址</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">
+                                            event FairdaoManagerSet(
+                                                address indexed managerAddress,
+                                                address indexed operator
+                                            )
+                                        </div>
+                                        <div class="tag is-info">更新</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">当FairdaoManager地址被设置或更新时触发。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>managerAddress</code> - 新的FairdaoManager地址</li>
+                                            <li><code>operator</code> - 执行更新操作的地址</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Modifiers -->
+                <section id="modifiers" class="api-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-title">修饰器</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <div class="mb-4">
+                                    <div class="function-def">modifier isOwner()</div>
+                                    <p class="mt-2">检查调用者是否为合约所有者。</p>
+                                    <p><strong>要求：</strong>调用者必须是合约所有者</p>
+                                    <p><strong>失败消息：</strong>"Not owner"</p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <div class="function-def">modifier onlyManager()</div>
+                                    <p class="mt-2">检查调用者是否为合约管理员。</p>
+                                    <p><strong>要求：</strong>调用者必须是合约管理员</p>
+                                    <p><strong>失败消息：</strong>"Not manager"</p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <div class="function-def">modifier notEmergency()</div>
+                                    <p class="mt-2">检查合约是否处于紧急停止状态。</p>
+                                    <p><strong>要求：</strong>合约不能处于紧急停止状态</p>
+                                    <p><strong>失败消息：</strong>"Emergency stop active"</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Functions -->
+                <section id="functions" class="api-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-title">函数</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <!-- FairdaoManagement 函数 -->
+                                <div id="fairdao-functions" class="mb-6">
+                                    <h3 class="subtitle is-4">FairdaoManagement 函数</h3>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">constructor()</div>
+                                        <p class="mt-2">构造函数，初始化合约并设置部署者地址为第一个所有者。</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function isManager(address user) external view returns (bool)</div>
+                                        <p class="mt-2">检查地址是否为管理员。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>user</code> - 要检查的地址</li>
+                                        </ul>
+                                        <p><strong>返回值：</strong>bool - 是否为管理员</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function isOwner(address user) external view returns (bool)</div>
+                                        <p class="mt-2">检查地址是否具有所有者权限。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>user</code> - 要检查的地址</li>
+                                        </ul>
+                                        <p><strong>返回值：</strong>bool - 是否具有所有者权限</p>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <div class="function-def">function addManager(address manager, bool withOwnerPermission) external isOwner notEmergency returns (bool)</div>
+                                        <p class="mt-2">添加新的管理员。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>manager</code> - 新管理员地址</li>
+                                            <li><code>withOwnerPermission</code> - 是否具有所有者权限</li>
+                                        </ul>
+                                        <p><strong>返回值：</strong>bool - 操作是否成功</p>
+                                        <p><strong>事件：</strong>ManagerAdded(manager, withOwnerPermission, msg.sender)</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function getManagerCount() external view returns (uint256)</div>
+                                        <p class="mt-2">获取管理员数量。</p>
+                                        <p><strong>返回值：</strong>uint256 - 管理员数量</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function removeManager(uint256 index, address manager) external isOwner notEmergency returns (bool)</div>
+                                        <p class="mt-2">移除管理员。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>index</code> - 管理员在数组中的索引</li>
+                                            <li><code>manager</code> - 要移除的管理员地址</li>
+                                        </ul>
+                                        <p><strong>要求：</strong></p>
+                                        <ul>
+                                            <li>index 必须有效</li>
+                                            <li>manager 必须在指定的索引位置</li>
+                                        </ul>
+                                        <p><strong>失败消息：</strong></p>
+                                        <ul>
+                                            <li>"Bad index"</li>
+                                        </ul>
+                                        <p><strong>返回值：</strong>bool - 操作是否成功</p>
+                                        <p><strong>事件：</strong>ManagerRemoved(manager, wasOwner, msg.sender)</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function getManagerAtIndex(uint256 index) external view returns (address)</div>
+                                        <p class="mt-2">获取指定索引处的管理员地址。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>index</code> - 数组中的索引</li>
+                                        </ul>
+                                        <p><strong>返回值：</strong>address - 管理员地址</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function getManagerInfo(address user) external view returns (uint256 timestamp, bool isOwner)</div>
+                                        <p class="mt-2">获取指定地址的管理员信息。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>user</code> - 要获取信息的地址</li>
+                                        </ul>
+                                        <p><strong>返回值：</strong></p>
+                                        <ul>
+                                            <li><code>timestamp</code> - 管理员添加时间戳（如果不是管理员则为0）</li>
+                                            <li><code>isOwner</code> - 该管理员是否具有所有者权限</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function isKeyManager(bytes32 key, address user) external view returns (bool)</div>
+                                        <p class="mt-2">检查地址是否为指定密钥的管理器。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>key</code> - 要检查的密钥</li>
+                                            <li><code>user</code> - 要检查的地址</li>
+                                        </ul>
+                                        <p><strong>返回值：</strong>bool - 是否为密钥管理器</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function getKeyManager(bytes32 key) external view returns (address manager)</div>
+                                        <p class="mt-2">获取特定密钥的管理器地址。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>key</code> - 要查询的密钥</li>
+                                        </ul>
+                                        <p><strong>返回值：</strong>address - 密钥管理器地址，如果没有则为 address(0)</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function addKeyManager(bytes32 key, address manager) external onlyManager notEmergency returns (bool)</div>
+                                        <p class="mt-2">为单个密钥添加管理器。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>key</code> - 要添加管理器的密钥</li>
+                                            <li><code>manager</code> - 管理器地址</li>
+                                        </ul>
+                                        <p><strong>返回值：</strong>bool - 操作是否成功</p>
+                                        <p><strong>事件：</strong>AddKeyManager(key, manager, msg.sender)</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function transferKeyManager(bytes32 key, address newManager) external notEmergency isOwner returns (bool)</div>
+                                        <p class="mt-2">将密钥管理权限转移给另一个地址。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>key</code> - 要转移管理权限的密钥</li>
+                                            <li><code>newManager</code> - 新管理器地址</li>
+                                        </ul>
+                                        <p><strong>返回值：</strong>bool - 操作是否成功</p>
+                                        <p><strong>事件：</strong>TransferKeyManager(key, oldManager, newManager, msg.sender)</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function isEmergencyStopped() external view returns (bool)</div>
+                                        <p class="mt-2">检查合约是否处于紧急停止状态。</p>
+                                        <p><strong>返回值：</strong>bool - 合约是否处于紧急停止状态</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function enableEmergencyStop() external isOwner returns (bool)</div>
+                                        <p class="mt-2">启用紧急停止（仅限所有者）。</p>
+                                        <p><strong>返回值：</strong>bool - 操作是否成功</p>
+                                        <p><strong>事件：</strong>EmergencyStopped(msg.sender)</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function disableEmergencyStop() external isOwner returns (bool)</div>
+                                        <p class="mt-2">禁用紧急停止（仅限所有者）。</p>
+                                        <p><strong>返回值：</strong>bool - 操作是否成功</p>
+                                        <p><strong>事件：</strong>EmergencyResumed(msg.sender)</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- UserDataStorage 函数 -->
+                                <div id="user-functions" class="mb-6">
+                                    <h3 class="subtitle is-4">UserDataStorage 函数</h3>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">constructor()</div>
+                                        <p class="mt-2">构造函数，将合约所有者设置为部署者。</p>
+                                        <p><strong>参数：</strong> 无</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function setFairdaoManager(address fairdaoManagerAddress) external returns (bool)</div>
+                                        <p class="mt-2">设置FairdaoManager合约地址。调用者首次设置时必须是合约所有者，且指定的fairdaoManagerAddress必须是FairdaoManager合约的所有者。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>fairdaoManagerAddress</code> - FairdaoManager合约的地址</li>
+                                        </ul>
+                                        <p><strong>要求：</strong></p>
+                                        <ul>
+                                            <li>如果FairdaoManager未设置，调用者必须是合约所有者</li>
+                                            <li>调用者必须是fairdaoManager.isOwner认可的所有者</li>
+                                            <li>fairdaoManagerAddress 不能为 address(0)</li>
+                                        </ul>
+                                        <p><strong>失败消息：</strong></p>
+                                        <ul>
+                                            <li>"Not owner"</li>
+                                            <li>"Invalid manager addr"</li>
+                                        </ul>
+                                        <p><strong>返回值：</strong> bool - 操作是否成功</p>
+                                        <p><strong>事件：</strong> FairdaoManagerSet(fairdaoManagerAddress, msg.sender)</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function setUserData(address user, bytes32 key, bytes calldata data) external returns (bool)</div>
+                                        <p class="mt-2">存储用户数据。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>user</code> - 用户地址</li>
+                                            <li><code>key</code> - 存储数据的键</li>
+                                            <li><code>data</code> - 要存储的数据</li>
+                                        </ul>
+                                        <p><strong>要求：</strong></p>
+                                        <ul>
+                                            <li>必须已设置FairdaoManager</li>
+                                            <li>user 不能为 address(0)</li>
+                                            <li>key 不能为 bytes32(0)</li>
+                                            <li>调用者必须是指定密钥的密钥管理员</li>
+                                        </ul>
+                                        <p><strong>失败消息：</strong></p>
+                                        <ul>
+                                            <li>"Manager not set"</li>
+                                            <li>"Zero user"</li>
+                                            <li>"Zero key"</li>
+                                            <li>"Not key manager"</li>
+                                        </ul>
+                                        <p><strong>返回值：</strong>bool - 操作是否成功</p>
+                                        <p><strong>事件：</strong>UserDataUpdated(user, key, data.length, msg.sender)</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function getUserData(address user, bytes32 key) external view returns (bytes memory data, uint64 timestamp)</div>
+                                        <p class="mt-2">获取存储的用户数据。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>user</code> - 用户地址</li>
+                                            <li><code>key</code> - 检索数据的键</li>
+                                        </ul>
+                                        <p><strong>要求：</strong></p>
+                                        <ul>
+                                            <li>必须已设置FairdaoManager</li>
+                                            <li>user 不能为 address(0)</li>
+                                            <li>key 不能为 bytes32(0)</li>
+                                        </ul>
+                                        <p><strong>失败消息：</strong></p>
+                                        <ul>
+                                            <li>"Manager not set"</li>
+                                            <li>"Zero user"</li>
+                                            <li>"Zero key"</li>
+                                        </ul>
+                                        <p><strong>返回值：</strong></p>
+                                        <ul>
+                                            <li><code>data</code> - 存储的数据</li>
+                                            <li><code>timestamp</code> - 最后更新的时间戳</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <div class="function-def">function getFairdaoManager() external view returns (address)</div>
+                                        <p class="mt-2">获取FairdaoManager合约的地址。</p>
+                                        <p><strong>参数：</strong> 无</p>
+                                        <p><strong>返回值：</strong> address - FairdaoManager合约的地址</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- SharedDataStorage 函数 -->
+                                <div id="shared-functions" class="mb-6">
+                                    <h3 class="subtitle is-4">SharedDataStorage 函数</h3>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">constructor()</div>
+                                        <p class="mt-2">构造函数，将合约所有者设置为部署者。</p>
+                                        <p><strong>参数：</strong> 无</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function setFairdaoManager(address fairdaoManagerAddress) external returns (bool)</div>
+                                        <p class="mt-2">设置FairdaoManager合约地址。调用者首次设置时必须是合约所有者，且指定的fairdaoManagerAddress必须是FairdaoManager合约的所有者。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>fairdaoManagerAddress</code> - FairdaoManager合约的地址</li>
+                                        </ul>
+                                        <p><strong>要求：</strong></p>
+                                        <ul>
+                                            <li>如果FairdaoManager未设置，调用者必须是合约所有者</li>
+                                            <li>调用者必须是fairdaoManager.isOwner认可的所有者</li>
+                                            <li>fairdaoManagerAddress 不能为 address(0)</li>
+                                        </ul>
+                                        <p><strong>失败消息：</strong></p>
+                                        <ul>
+                                            <li>"Not owner"</li>
+                                            <li>"Invalid manager addr"</li>
+                                        </ul>
+                                        <p><strong>返回值：</strong> bool - 操作是否成功</p>
+                                        <p><strong>事件：</strong> FairdaoManagerSet(fairdaoManagerAddress, msg.sender)</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function setSharedData(bytes32 key, bytes32 sharedValueId, bytes calldata data) external returns (bool)</div>
+                                        <p class="mt-2">存储共享数据。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>key</code> - 存储数据的键</li>
+                                            <li><code>sharedValueId</code> - 值的唯一标识符</li>
+                                            <li><code>data</code> - 要存储的数据</li>
+                                        </ul>
+                                        <p><strong>要求：</strong></p>
+                                        <ul>
+                                            <li>必须已设置FairdaoManager</li>
+                                            <li>key 不能为 bytes32(0)</li>
+                                            <li>sharedValueId 不能为 bytes32(0)</li>
+                                            <li>调用者必须是指定密钥的密钥管理员</li>
+                                        </ul>
+                                        <p><strong>失败消息：</strong></p>
+                                        <ul>
+                                            <li>"Manager not set"</li>
+                                            <li>"Zero key"</li>
+                                            <li>"Zero value ID"</li>
+                                            <li>"Not key manager"</li>
+                                        </ul>
+                                    </div>
+                                    
+
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function getSharedData(bytes32 key, bytes32 sharedValueId) external view returns (bytes memory data, uint64 timestamp)</div>
+                                        <p class="mt-2">获取共享数据。</p>
+                                        <p><strong>参数：</strong></p>
+                                        <ul>
+                                            <li><code>key</code> - 检索数据的键</li>
+                                            <li><code>sharedValueId</code> - 值的唯一标识符</li>
+                                        </ul>
+                                        <p><strong>要求：</strong></p>
+                                        <ul>
+                                            <li>必须已设置FairdaoManager</li>
+                                            <li>key 不能为 bytes32(0)</li>
+                                            <li>sharedValueId 不能为 bytes32(0)</li>
+                                        </ul>
+                                        <p><strong>失败消息：</strong></p>
+                                        <ul>
+                                            <li>"Manager not set"</li>
+                                            <li>"Zero key"</li>
+                                            <li>"Zero value ID"</li>
+                                        </ul>
+                                        <p><strong>返回值：</strong></p>
+                                        <ul>
+                                            <li><code>data</code> - 存储的共享数据</li>
+                                            <li><code>timestamp</code> - 最后更新的时间戳</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <div class="function-def">function getFairdaoManager() external view returns (address)</div>
+                                        <p class="mt-2">获取FairdaoManager合约的地址。</p>
+                                        <p><strong>参数：</strong> 无</p>
+                                        <p><strong>返回值：</strong> address - FairdaoManager合约的地址</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer mt-8">
+        <div class="container">
+            <div class="content has-text-centered">
+                <p>FairdaoStorage 非接口合约 API 文档 &copy; 2024</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/common.js"></script>
+</body>
+</html>

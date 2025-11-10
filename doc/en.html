@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FairdaoStorage Contracts API Documentation</title>
+    <!-- Integrated Bulma v1.0 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="#">
+                <span class="title is-4 has-text-white">FairdaoStorage</span>
+            </a>
+            
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="#overview">Overview</a>
+                <a class="navbar-item" href="#contracts">Contracts</a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link" href="#events">Events</a>
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" href="#fairdao-events">FairdaoManagement Events</a>
+                        <a class="navbar-item" href="#user-events">UserDataStorage Events</a>
+                        <a class="navbar-item" href="#shared-events">SharedDataStorage Events</a>
+                    </div>
+                </div>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link" href="#functions">Functions</a>
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" href="#fairdao-functions">FairdaoManagement Functions</a>
+                        <a class="navbar-item" href="#user-functions">UserDataStorage Functions</a>
+                        <a class="navbar-item" href="#shared-functions">SharedDataStorage Functions</a>
+                    </div>
+                </div>
+                <a class="navbar-item" href="#modifiers">Modifiers</a>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                          <a href="zh.html" class="button is-light">
+                            <i class="fas fa-language"></i> 中文
+                        </a>
+                          <a href="en.html" class="button is-light">
+                            <i class="fas fa-language"></i> English
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        <div class="columns">
+            <!-- Sidebar Navigation -->
+            <div class="column is-3">
+                <aside class="sidebar p-4">
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 class="title is-5 mb-4">Navigation</h3>
+                            <ul class="menu-list">
+                                <li><a href="#overview">Overview</a></li>
+                                <li><a href="#contracts">Contracts</a></li>
+                                <li>
+                                    <a href="#events">Events</a>
+                                    <ul class="ml-4 mt-2">
+                                        <li><a href="#fairdao-events">FairdaoManagement Events</a></li>
+                                        <li><a href="#user-events">UserDataStorage Events</a></li>
+                                        <li><a href="#shared-events">SharedDataStorage Events</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#functions">Functions</a>
+                                    <ul class="ml-4 mt-2">
+                                        <li><a href="#fairdao-functions">FairdaoManagement Functions</a></li>
+                                        <li><a href="#user-functions">UserDataStorage Functions</a></li>
+                                        <li><a href="#shared-functions">SharedDataStorage Functions</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#modifiers">Modifiers</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="column is-9">
+                <!-- Overview -->
+                <section id="overview" class="api-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-title">Overview</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <h1 class="title is-2">FairdaoStorage Non-Interface Contracts</h1>
+                                <p>This documentation covers three non-interface contracts in the FairdaoStorage project: FairdaoManagement, UserDataStorage, and SharedDataStorage.</p>
+                                <p>These contracts provide core DAO functionality including admin management, key management, user-specific data storage, and shared data storage.</p>
+                                
+                                <div class="mt-4">
+                                    <h3 class="subtitle is-4">License</h3>
+                                    <p>SPDX-License-Identifier: GPL-3.0</p>
+                                </div>
+                                
+                                <div class="mt-4">
+                                    <h3 class="subtitle is-4">Solidity Version</h3>
+                                    <p>^0.8.24</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Contract Structure -->
+                <section id="contracts" class="api-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-title">Contracts</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <!-- FairdaoManagement -->
+                                <div class="mb-6">
+                                    <h3 class="subtitle is-4">FairdaoManagement</h3>
+                                    <p>FAIR DAO management contract that provides management functions for admins, owners, and key managers.</p>
+                                    <p>Implements the IFairdaoManager interface, handling access control, emergency stop mechanism, and key management operations.</p>
+                                </div>
+                                
+                                <!-- UserDataStorage -->
+                                <div class="mb-6">
+                                    <h3 class="subtitle is-4">UserDataStorage</h3>
+                                    <p>User data storage contract responsible for managing user-specific data.</p>
+                                    <p>Allows key managers to store and retrieve data for specific users.</p>
+                                </div>
+                                
+                                <!-- SharedDataStorage -->
+                                <div class="mb-6">
+                                    <h3 class="subtitle is-4">SharedDataStorage</h3>
+                                    <p>Shared data storage contract responsible for managing data shared among all users.</p>
+                                    <p>Allows key managers to store and retrieve data accessible by all users.</p>
+                                </div>
+                                
+                                <h3 class="subtitle is-4">Data Structures</h3>
+                                
+                                <div class="mb-4">
+                                    <h4 class="title is-5">Storage Structure (UserDataStorage and SharedDataStorage)</h4>
+                                    <div class="code-block">
+<pre>struct Storage {
+    uint64 timestamp; // Timestamp
+    bytes data;       // Data content
+}</pre>
+                                    </div>
+                                    <p class="mt-2">Structure used to store data and its timestamp.</p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h4 class="title is-5">ManagerInfo Structure (FairdaoManagement)</h4>
+                                    <div class="code-block">
+<pre>struct ManagerInfo {
+    uint64 timestamp; // Timestamp
+    bool isOwner;     // Whether the manager is an owner
+}</pre>
+                                    </div>
+                                    <p class="mt-2">Structure for storing manager information, including creation timestamp and owner permission flag.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Events -->
+                <section id="events" class="api-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-title">Events</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <!-- FairdaoManagement Events -->
+                                <div id="fairdao-events" class="mb-6">
+                                    <h3 class="subtitle is-4">FairdaoManagement Events</h3>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">
+                                            event ManagerAdded(
+                                                address indexed manager,
+                                                bool isOwner,
+                                                address indexed operator
+                                            )
+                                        </div>
+                                        <div class="tag is-success">Add</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">Triggered when a new manager is added.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>manager</code> - The address of the added manager</li>
+                                            <li><code>isOwner</code> - Whether the manager is an owner</li>
+                                            <li><code>operator</code> - The address that performed the add operation</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">
+                                            event ManagerRemoved(
+                                                address indexed manager,
+                                                bool wasOwner,
+                                                address indexed operator
+                                            )
+                                        </div>
+                                        <div class="tag is-danger">Remove</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">Triggered when a manager is removed.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>manager</code> - The address of the removed manager</li>
+                                            <li><code>wasOwner</code> - Whether the manager was an owner</li>
+                                            <li><code>operator</code> - The address that performed the remove operation</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">
+                                            event AddKeyManager(
+                                                bytes32 indexed key,
+                                                address manager,
+                                                address indexed operator
+                                            )
+                                        </div>
+                                        <div class="tag is-success">Add</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">Triggered when a key manager is added.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>key</code> - The key being managed</li>
+                                            <li><code>manager</code> - The address of the key manager</li>
+                                            <li><code>operator</code> - The address that performed the add operation</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">
+                                            event TransferKeyManager(
+                                                bytes32 indexed key,
+                                                address oldManager,
+                                                address newManager,
+                                                address indexed operator
+                                            )
+                                        </div>
+                                        <div class="tag is-warning">Transfer</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">Triggered when key management permissions are transferred.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>key</code> - The key being managed</li>
+                                            <li><code>oldManager</code> - The previous manager address</li>
+                                            <li><code>newManager</code> - The new manager address</li>
+                                            <li><code>operator</code> - The address that performed the transfer operation</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">event EmergencyStopped(address indexed operator)</div>
+                                        <div class="tag is-info">Emergency</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">Triggered when emergency stop is enabled.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>operator</code> - The address that triggered emergency stop</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">event EmergencyResumed(address indexed operator)</div>
+                                        <div class="tag is-success">Resume</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">Triggered when emergency stop is disabled.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>operator</code> - The address that resumed operations</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- UserDataStorage Events -->
+                                <div id="user-events" class="mb-6">
+                                    <h3 class="subtitle is-4">UserDataStorage Events</h3>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">
+                                            event UserDataUpdated(
+                                                address indexed user,
+                                                bytes32 indexed key,
+                                                uint256 dataLength,
+                                                address indexed operator
+                                            )
+                                        </div>
+                                        <div class="tag is-info">Update</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">Triggered when user data is updated.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>user</code> - User address</li>
+                                            <li><code>key</code> - Key used to store the data</li>
+                                            <li><code>dataLength</code> - Length of the stored data</li>
+                                            <li><code>operator</code> - Address that performed the update operation</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">
+                                            event FairdaoManagerSet(
+                                                address indexed managerAddress,
+                                                address indexed operator
+                                            )
+                                        </div>
+                                        <div class="tag is-info">Update</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">Triggered when FairdaoManager address is set or updated.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>managerAddress</code> - New FairdaoManager address</li>
+                                            <li><code>operator</code> - Address that performed the update operation</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- SharedDataStorage Events -->
+                                <div id="shared-events" class="mb-6">
+                                    <h3 class="subtitle is-4">SharedDataStorage Events</h3>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">
+                                            event SharedDataUpdated(
+                                                bytes32 indexed key,
+                                                bytes32 indexed valueId,
+                                                uint256 dataLength,
+                                                address indexed operator
+                                            )
+                                        </div>
+                                        <div class="tag is-info">Update</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">Triggered when shared data is updated.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>key</code> - Key used to store the data</li>
+                                            <li><code>valueId</code> - Unique identifier for the value</li>
+                                            <li><code>dataLength</code> - Length of the stored data</li>
+                                            <li><code>operator</code> - Address that performed the update operation</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">
+                                            event FairdaoManagerSet(
+                                                address indexed managerAddress,
+                                                address indexed operator
+                                            )
+                                        </div>
+                                        <div class="tag is-info">Update</div>
+                                        <div class="tag is-light">indexed</div>
+                                        <p class="mt-2">Triggered when FairdaoManager address is set or updated.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>managerAddress</code> - New FairdaoManager address</li>
+                                            <li><code>operator</code> - Address that performed the update operation</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Modifiers -->
+                <section id="modifiers" class="api-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-title">Modifiers</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <div class="mb-4">
+                                    <div class="function-def">modifier isOwner()</div>
+                                    <p class="mt-2">Checks if the caller is a contract owner.</p>
+                                    <p><strong>Requirement:</strong> Caller must be a contract owner</p>
+                                    <p><strong>Failure message:</strong> "Not owner"</p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <div class="function-def">modifier onlyManager()</div>
+                                    <p class="mt-2">Checks if the caller is a contract manager.</p>
+                                    <p><strong>Requirement:</strong> Caller must be a contract manager</p>
+                                    <p><strong>Failure message:</strong> "Not manager"</p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <div class="function-def">modifier notEmergency()</div>
+                                    <p class="mt-2">Checks if the contract is in emergency stop state.</p>
+                                    <p><strong>Requirement:</strong> Contract must not be in emergency stop state</p>
+                                    <p><strong>Failure message:</strong> "Emergency stop active"</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Functions -->
+                <section id="functions" class="api-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-title">Functions</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <!-- FairdaoManagement Functions -->
+                                <div id="fairdao-functions" class="mb-6">
+                                    <h3 class="subtitle is-4">FairdaoManagement Functions</h3>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">constructor()</div>
+                                        <p class="mt-2">Constructor function, initializes the contract and sets the deployer address as the first owner.</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function isManager(address user) external view returns (bool)</div>
+                                        <p class="mt-2">Checks if an address is a manager.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>user</code> - The address to check</li>
+                                        </ul>
+                                        <p><strong>Return value:</strong> bool - Whether the address is a manager</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function isOwner(address user) external view returns (bool)</div>
+                                        <p class="mt-2">Checks if an address has owner privileges.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>user</code> - The address to check</li>
+                                        </ul>
+                                        <p><strong>Return value:</strong> bool - Whether the address has owner privileges</p>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <div class="function-def">function addManager(address manager, bool withOwnerPermission) external isOwner notEmergency returns (bool)</div>
+                                        <p class="mt-2">Adds a new manager.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>manager</code> - New manager address</li>
+                                            <li><code>withOwnerPermission</code> - Whether to grant owner permission</li>
+                                        </ul>
+                                        <p><strong>Return value:</strong> bool - Whether the operation succeeded</p>
+                                        <p><strong>Event:</strong> ManagerAdded(manager, withOwnerPermission, msg.sender)</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function getManagerCount() external view returns (uint256)</div>
+                                        <p class="mt-2">Gets the number of managers.</p>
+                                        <p><strong>Return value:</strong> uint256 - Number of managers</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function removeManager(uint256 index, address manager) external isOwner notEmergency returns (bool)</div>
+                                        <p class="mt-2">Removes a manager.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>index</code> - Index of the manager in the array</li>
+                                            <li><code>manager</code> - Address of the manager to remove</li>
+                                        </ul>
+                                        <p><strong>Requirements:</strong></p>
+                                        <ul>
+                                            <li>index must be valid</li>
+                                            <li>manager must be at the specified index</li>
+                                        </ul>
+                                        <p><strong>Failure messages:</strong></p>
+                                        <ul>
+                                            <li>"Bad index"</li>
+                                        </ul>
+                                        <p><strong>Return value:</strong> bool - Whether the operation succeeded</p>
+                                        <p><strong>Event:</strong> ManagerRemoved(manager, wasOwner, msg.sender)</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function getManagerAtIndex(uint256 index) external view returns (address)</div>
+                                        <p class="mt-2">Gets the manager address at the specified index.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>index</code> - Index in the array</li>
+                                        </ul>
+                                        <p><strong>Return value:</strong> address - Manager address</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function getManagerInfo(address user) external view returns (uint256 timestamp, bool isOwner)</div>
+                                        <p class="mt-2">Gets manager information for the specified address.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>user</code> - Address to get information for</li>
+                                        </ul>
+                                        <p><strong>Return values:</strong></p>
+                                        <ul>
+                                            <li><code>timestamp</code> - Manager addition timestamp (0 if not a manager)</li>
+                                            <li><code>isOwner</code> - Whether the manager has owner permissions</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function isKeyManager(bytes32 key, address user) external view returns (bool)</div>
+                                        <p class="mt-2">Checks if an address is the manager of the specified key.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>key</code> - The key to check</li>
+                                            <li><code>user</code> - The address to check</li>
+                                        </ul>
+                                        <p><strong>Return value:</strong> bool - Whether the address is a key manager</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function getKeyManager(bytes32 key) external view returns (address manager)</div>
+                                        <p class="mt-2">Gets the manager address of a specific key.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>key</code> - The key to query</li>
+                                        </ul>
+                                        <p><strong>Return value:</strong> address - Key manager address, or address(0) if none</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function addKeyManager(bytes32 key, address manager) external onlyManager notEmergency returns (bool)</div>
+                                        <p class="mt-2">Adds a manager for a single key.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>key</code> - The key to add a manager for</li>
+                                            <li><code>manager</code> - Manager address</li>
+                                        </ul>
+                                        <p><strong>Return value:</strong> bool - Whether the operation succeeded</p>
+                                        <p><strong>Event:</strong> AddKeyManager(key, manager, msg.sender)</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function transferKeyManager(bytes32 key, address newManager) external notEmergency isOwner returns (bool)</div>
+                                        <p class="mt-2">Transfers key management permissions to another address.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>key</code> - The key to transfer management for</li>
+                                            <li><code>newManager</code> - New manager address</li>
+                                        </ul>
+                                        <p><strong>Return value:</strong> bool - Whether the operation succeeded</p>
+                                        <p><strong>Event:</strong> TransferKeyManager(key, oldManager, newManager, msg.sender)</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function isEmergencyStopped() external view returns (bool)</div>
+                                        <p class="mt-2">Checks if the contract is in emergency stop state.</p>
+                                        <p><strong>Return value:</strong> bool - Whether the contract is in emergency stop state</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function enableEmergencyStop() external isOwner returns (bool)</div>
+                                        <p class="mt-2">Enables emergency stop (owner only).</p>
+                                        <p><strong>Return value:</strong> bool - Whether the operation succeeded</p>
+                                        <p><strong>Event:</strong> EmergencyStopped(msg.sender)</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function disableEmergencyStop() external isOwner returns (bool)</div>
+                                        <p class="mt-2">Disables emergency stop (owner only).</p>
+                                        <p><strong>Return value:</strong> bool - Whether the operation succeeded</p>
+                                        <p><strong>Event:</strong> EmergencyResumed(msg.sender)</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- UserDataStorage Functions -->
+                                <div id="user-functions" class="mb-6">
+                                    <h3 class="subtitle is-4">UserDataStorage Functions</h3>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">constructor()</div>
+                                        <p class="mt-2">Constructor function, sets the contract owner to the deployer.</p>
+                                        <p><strong>Parameters:</strong> None</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function setFairdaoManager(address fairdaoManagerAddress) external returns (bool)</div>
+                                        <p class="mt-2">Sets the FairdaoManager contract address. The caller must be the contract owner when setting for the first time, and the specified fairdaoManagerAddress must be an owner of the FairdaoManager contract.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>fairdaoManagerAddress</code> - Address of the FairdaoManager contract</li>
+                                        </ul>
+                                        <p><strong>Requirements:</strong></p>
+                                        <ul>
+                                            <li>If FairdaoManager is not set, caller must be the contract owner</li>
+                                            <li>The caller must be an owner according to fairdaoManager.isOwner</li>
+                                            <li>fairdaoManagerAddress cannot be address(0)</li>
+                                        </ul>
+                                        <p><strong>Failure messages:</strong></p>
+                                        <ul>
+                                            <li>"Not owner"</li>
+                                            <li>"Invalid manager addr"</li>
+                                        </ul>
+                                        <p><strong>Return value:</strong> bool - Whether the operation succeeded</p>
+                                        <p><strong>Event:</strong> FairdaoManagerSet(fairdaoManagerAddress, msg.sender)</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function setUserData(address user, bytes32 key, bytes calldata data) external returns (bool)</div>
+                                        <p class="mt-2">Stores user data.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>user</code> - User address</li>
+                                            <li><code>key</code> - Key to store the data</li>
+                                            <li><code>data</code> - Data to be stored</li>
+                                        </ul>
+                                        <p><strong>Requirements:</strong></p>
+                                        <ul>
+                                            <li>FairdaoManager must be set</li>
+                                            <li>user cannot be address(0)</li>
+                                            <li>key cannot be bytes32(0)</li>
+                                            <li>Caller must be the key manager for the specified key</li>
+                                        </ul>
+                                        <p><strong>Failure messages:</strong></p>
+                                        <ul>
+                                            <li>"Manager not set"</li>
+                                            <li>"Zero user"</li>
+                                            <li>"Zero key"</li>
+                                            <li>"Not key manager"</li>
+                                        </ul>
+                                        <p><strong>Return value:</strong> bool - Whether the operation succeeded</p>
+                                        <p><strong>Event:</strong> UserDataUpdated(user, key, data.length, msg.sender)</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function getUserData(address user, bytes32 key) external view returns (bytes memory data, uint64 timestamp)</div>
+                                        <p class="mt-2">Gets stored user data.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>user</code> - User address</li>
+                                            <li><code>key</code> - Key to retrieve data</li>
+                                        </ul>
+                                        <p><strong>Requirements:</strong></p>
+                                        <ul>
+                                            <li>FairdaoManager must be set</li>
+                                            <li>user cannot be address(0)</li>
+                                            <li>key cannot be bytes32(0)</li>
+                                        </ul>
+                                        <p><strong>Failure messages:</strong></p>
+                                        <ul>
+                                            <li>"Manager not set"</li>
+                                            <li>"Zero user"</li>
+                                            <li>"Zero key"</li>
+                                        </ul>
+                                        <p><strong>Return values:</strong></p>
+                                        <ul>
+                                            <li><code>data</code> - Stored data</li>
+                                            <li><code>timestamp</code> - Last update timestamp</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <div class="function-def">function getFairdaoManager() external view returns (address)</div>
+                                        <p class="mt-2">Gets the address of the FairdaoManager contract.</p>
+                                        <p><strong>Parameters:</strong> None</p>
+                                        <p><strong>Return value:</strong> address - The address of the FairdaoManager contract</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- SharedDataStorage Functions -->
+                                <div id="shared-functions" class="mb-6">
+                                    <h3 class="subtitle is-4">SharedDataStorage Functions</h3>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">constructor()</div>
+                                        <p class="mt-2">Constructor function, sets the contract owner to the deployer.</p>
+                                        <p><strong>Parameters:</strong> None</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function setFairdaoManager(address fairdaoManagerAddress) external returns (bool)</div>
+                                        <p class="mt-2">Sets the FairdaoManager contract address. The caller must be the contract owner when setting for the first time, and the specified fairdaoManagerAddress must be an owner of the FairdaoManager contract.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>fairdaoManagerAddress</code> - Address of the FairdaoManager contract</li>
+                                        </ul>
+                                        <p><strong>Requirements:</strong></p>
+                                        <ul>
+                                            <li>If FairdaoManager is not set, caller must be the contract owner</li>
+                                            <li>The caller must be an owner according to fairdaoManager.isOwner</li>
+                                            <li>fairdaoManagerAddress cannot be address(0)</li>
+                                        </ul>
+                                        <p><strong>Failure messages:</strong></p>
+                                        <ul>
+                                            <li>"Not owner"</li>
+                                            <li>"Invalid manager addr"</li>
+                                        </ul>
+                                        <p><strong>Return value:</strong> bool - Whether the operation succeeded</p>
+                                        <p><strong>Event:</strong> FairdaoManagerSet(fairdaoManagerAddress, msg.sender)</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function setSharedData(bytes32 key, bytes32 sharedValueId, bytes calldata data) external returns (bool)</div>
+                                        <p class="mt-2">Stores shared data.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>key</code> - Key to store the data</li>
+                                            <li><code>sharedValueId</code> - Unique identifier for the value</li>
+                                            <li><code>data</code> - Data to be stored</li>
+                                        </ul>
+                                        <p><strong>Requirements:</strong></p>
+                                        <ul>
+                                            <li>FairdaoManager must be set</li>
+                                            <li>key cannot be bytes32(0)</li>
+                                            <li>sharedValueId cannot be bytes32(0)</li>
+                                            <li>Caller must be the key manager for the specified key</li>
+                                        </ul>
+                                        <p><strong>Failure messages:</strong></p>
+                                        <ul>
+                                            <li>"Manager not set"</li>
+                                            <li>"Zero key"</li>
+                                            <li>"Zero value ID"</li>
+                                            <li>"Not key manager"</li>
+                                        </ul>
+                                    </div>
+                                    
+
+                                    
+                                    <div class="mb-4">
+                                        <div class="function-def">function getSharedData(bytes32 key, bytes32 sharedValueId) external view returns (bytes memory data, uint64 timestamp)</div>
+                                        <p class="mt-2">Gets shared data.</p>
+                                        <p><strong>Parameters:</strong></p>
+                                        <ul>
+                                            <li><code>key</code> - Key to retrieve data</li>
+                                            <li><code>sharedValueId</code> - Unique identifier for the value</li>
+                                        </ul>
+                                        <p><strong>Requirements:</strong></p>
+                                        <ul>
+                                            <li>FairdaoManager must be set</li>
+                                            <li>key cannot be bytes32(0)</li>
+                                            <li>sharedValueId cannot be bytes32(0)</li>
+                                        </ul>
+                                        <p><strong>Failure messages:</strong></p>
+                                        <ul>
+                                            <li>"Manager not set"</li>
+                                            <li>"Zero key"</li>
+                                            <li>"Zero value ID"</li>
+                                        </ul>
+                                        <p><strong>Return values:</strong></p>
+                                        <ul>
+                                            <li><code>data</code> - Stored shared data</li>
+                                            <li><code>timestamp</code> - Last update timestamp</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <div class="function-def">function getFairdaoManager() external view returns (address)</div>
+                                        <p class="mt-2">Gets the address of the FairdaoManager contract.</p>
+                                        <p><strong>Parameters:</strong> None</p>
+                                        <p><strong>Return value:</strong> address - The address of the FairdaoManager contract</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-8">
+        <div class="container">
+            <div class="content has-text-centered">
+                <p>FairdaoStorage Non-Interface Contracts API Documentation &copy; 2024</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/common.js"></script>
+</body>
+</html>

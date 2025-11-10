@@ -1,0 +1,132 @@
+.navbar {
+    padding: 0.5rem;
+}
+
+.main-content{
+    margin-top: 5.5rem;
+}
+.sidebar {
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+    position: sticky;
+    top: 64px;
+}
+
+section ,.content div{
+ scroll-margin-top: 5.5rem;
+}
+.api-section {
+    margin-bottom: 2rem;
+}
+.card-header-title {
+    font-weight: 600;
+    color: #2d3748;
+}
+.code-block {
+    background-color: #2d3748;
+    color: #e2e8f0;
+    border-radius: 4px;
+    padding: 1rem;
+    overflow-x: auto;
+    font-family: 'Courier New', Courier, monospace;
+    border-left: 4px solid #4299e1;
+}
+.nav-tabs {
+    border-bottom: 1px solid #e0e0e0;
+}
+.nav-tabs .nav-item {
+    margin-bottom: -1px;
+    transition: background-color 0.2s ease;
+}
+.nav-tabs .nav-item:hover {
+    background-color: #f7fafc;
+}
+.nav-tabs .nav-link.active {
+    background-color: #ebf8ff;
+    color: #2b6cb0;
+    border-bottom: 2px solid #00d1b2;
+    font-weight: 500;
+}
+.function-def {
+    background-color: #2d3748;
+    color: #e2e8f0;
+    padding: 0.75rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    white-space: pre-wrap;
+    word-break: break-word;
+    border-left: 4px solid #4299e1;
+    margin-bottom: 0.5rem;
+}
+
+.event-def {
+    background-color: #2d3748;
+    color: #e2e8f0;
+    padding: 0.75rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    white-space: pre-wrap;
+    word-break: break-word;
+    border-left: 4px solid #38a169;
+}
+.tag {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+code {
+    background-color: #edf2f7;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    color: #2d3748;
+}
+/* 平滑滚动 */
+html {
+    scroll-behavior: smooth;
+}
+
+.card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+.card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+.card-header {
+    background-color: #f7fafc;
+    border-bottom: 1px solid #e2e8f0;
+}
+.content h3 {
+    color: #2d3748;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+.content ul li {
+    margin-bottom: 0.5rem;
+}
+.content p {
+    margin-bottom: 0.75rem;
+}
+.scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4299e1;
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+.scroll-to-top.visible {
+    opacity: 1;
+}
