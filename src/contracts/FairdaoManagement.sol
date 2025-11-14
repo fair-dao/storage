@@ -239,7 +239,7 @@ contract FairdaoManagement  {
      * @param key The key to query
      * @return manager The address of the key manager, or address(0) if none
      */
-    function getKeyManager(bytes32 key) external view returns (address manager) {
+    function getKeyManager(bytes32 key) external view returns (address) {
         require(key != bytes32(0), "Zero key");
         return _keyManagers[key];
     }
